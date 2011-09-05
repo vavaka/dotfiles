@@ -1,0 +1,13 @@
+[user]
+	name = Vladimir Kuznetsov
+	email = vavaka@gmail.com
+[core]
+	editor = vim
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[color "status"]
+	changed = yellow
+	added = green
+	untracked = red
