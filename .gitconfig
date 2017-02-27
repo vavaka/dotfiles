@@ -34,3 +34,5 @@
     changed = green
     deleted = red
     untracked = cyan
+[push]
+	default = simple
