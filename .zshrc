@@ -93,6 +93,9 @@ eval "$(fasd --init auto)"
 # fzf configuration
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore-dir=.git  --ignore-dir=.svn -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # hh configuration
 export HISTFILE=~/.zsh_history
 export HH_CONFIG=hicolor,blacklist,rawhistory
