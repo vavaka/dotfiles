@@ -1,4 +1,3 @@
-
 " Initialization
 " ---------------------------------------------------------------------------------------------
 if 0 | endif " Skip initialization for vim-tiny or vim-small 
@@ -10,112 +9,96 @@ set nocompatible " Be iMproved
 " Plugins
 " ---------------------------------------------------------------------------------------------
 
-" Neobundle Required:
-set runtimepath^=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle'))
-NeoBundleFetch 'Shougo/neobundle.vim'
+" VimPlug Required
+call plug#begin('~/.vim/plugged')
 
 " Files/buffers navigation
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'mileszs/ack.vim'
-"NeoBundle 'rking/ag.vim'
-NeoBundle 'albfan/ag.vim'
-NeoBundle 'tpope/vim-unimpaired'         " navigate between files, buffers, errors and etc
-NeoBundle 'junegunn/fzf'                 " Fuzzy Finder
-NeoBundle 'junegunn/fzf.vim'
-NeoBundle 'qpkorr/vim-bufkill'           " kill buffer using ':BD' without closing a window
+Plug 'scrooloose/nerdtree'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'mileszs/ack.vim'
+"Plug 'rking/ag.vim'
+Plug 'albfan/ag.vim'
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-unimpaired'         " navigate between files, buffers, errors and etc
+Plug 'junegunn/fzf'                 " Fuzzy Finder
+Plug 'junegunn/fzf.vim'
+Plug 'qpkorr/vim-bufkill'           " kill buffer using ':BD' without closing a window
 
 " Editor
-NeoBundle 'myusuf3/numbers.vim'          " toggle absulute/relative line numbers <leader><leader>#
-NeoBundle 'Lokaltog/vim-easymotion'      " quick navigation 's'
-NeoBundle 'chrisbra/NrrwRgn'             " edit visual block in separate split window <leader>nr
-NeoBundle 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
-NeoBundle 'tpope/vim-surround'           " surround visual block with quotes, braces, brackets 'S'
-NeoBundle 'mbbill/undotree'
-NeoBundle 'sjl/gundo.vim'
-NeoBundle 'serby/vim-historic'
-NeoBundle 'hjdivad/vimlocalhistory'
-NeoBundle 'MattesGroeger/vim-bookmarks'
+Plug 'myusuf3/numbers.vim'          " toggle absulute/relative line numbers <leader><leader>#
+Plug 'Lokaltog/vim-easymotion'      " quick navigation 's'
+Plug 'chrisbra/NrrwRgn'             " edit visual block in separate split window <leader>nr
+Plug 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
+Plug 'tpope/vim-surround'           " surround visual block with quotes, braces, brackets 'S'
+Plug 'mbbill/undotree'
+Plug 'sjl/gundo.vim'
+Plug 'serby/vim-historic'
+Plug 'hjdivad/vimlocalhistory'
+Plug 'MattesGroeger/vim-bookmarks'
 
 " Programming
-NeoBundle 'vavaka/tagbar'
-"NeoBundle 'majutsushi/tagbar'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'ddollar/nerdcommenter'
-"NeoBundle 'ervandew/supertab'
-"NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'Shougo/neocomplcache.vim'
-NeoBundle 'tmhedberg/matchit'
-
-
+Plug 'w0rp/ale'
+Plug 'vavaka/tagbar'
+"Plug 'majutsushi/tagbar'
+Plug 'ddollar/nerdcommenter'
+"Plug 'ervandew/supertab'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'Shougo/neocomplcache.vim'
+"Plug 'vim-scripts/AutoComplPop'
+"Plug 'tmhedberg/matchit'
+Plug 'tpope/vim-cucumber'
 
 " Snippets
-"NeoBundle 'MarcWeber/vim-addon-mw-utils' " vim-snipmate dependency
-"NeoBundle 'tomtom/tlib_vim' " vim-snipmate dependency 
-"NeoBundle 'garbas/vim-snipmate' " snippets engine
-
-NeoBundle 'sirver/ultisnips'
-NeoBundle 'honza/vim-snippets' "snippets repository
+"Plug 'MarcWeber/vim-addon-mw-utils' " vim-snipmate dependency
+"Plug 'tomtom/tlib_vim' " vim-snipmate dependency 
+"Plug 'garbas/vim-snipmate' " snippets engine
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets' "snippets repository
 
 " Misc
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-"NeoBundle 'chrisbra/vim-diff-enhanced'
-NeoBundle 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_existed_dir/file.txt
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'mac' : 'make -f make_mac.mak'
-\    },
-\ }
-if has('nvim')
-    NeoBundle 'kassio/neoterm'
-endif
-
-" You can specify revision/branch/tag.
-" NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+Plug 'flazz/vim-colorschemes'
+Plug 'chriskempson/base16-vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'chrisbra/vim-diff-enhanced'
+"Plug 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_existed_dir/file.txt
 
 " Git
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Tmux
-NeoBundle 'benmills/vimux'                   " Create 20% split under current pane and run command in it, useful for tests
-NeoBundle 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes using same key bindings
+Plug 'benmills/vimux'                   " Create 20% split under current pane and run command in it, useful for tests
+Plug 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes using same key bindings
 
 " Ruby and Rails
-NeoBundle 'tpope/vim-rvm'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'skalnik/vim-vroom' " A vim plugin for running your Ruby tests
-NeoBundle 't9md/vim-ruby-xmpfilter' " ruby live in-place execution
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
+Plug 'tpope/vim-rvm'
+Plug 'tpope/vim-rails'
+Plug 'skalnik/vim-vroom' " A vim plugin for running your Ruby tests
+Plug 't9md/vim-ruby-xmpfilter' " ruby live in-place execution
+Plug 'tpope/vim-endwise'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
 
 " Javascript
-NeoBundle "pangloss/vim-javascript"
+Plug 'pangloss/vim-javascript'
 
 " Erlang
-NeoBundle 'vim-erlang/vim-erlang-runtime'
-NeoBundle 'vim-erlang/vim-erlang-compiler'
-NeoBundle 'vim-erlang/vim-erlang-omnicomplete'
-NeoBundle 'vim-erlang/vim-erlang-tags'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+Plug 'vim-erlang/vim-erlang-tags'
 
 " Elixir
-NeoBundle 'elixir-lang/vim-elixir'
-NeoBundle 'slashmili/alchemist.vim' "tags navigation becomes available only after `mix phoneix.server`
+Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim' "tags navigation becomes available only after `mix phoneix.server`
 
 " Haskell
-NeoBundle 'eagletmt/ghcmod-vim'
-NeoBundle 'eagletmt/neco-ghc'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'eagletmt/neco-ghc'
 
-" Neobundle Required:
-call neobundle#end()
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
+" Initialize plugin system
+call plug#end()
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -142,7 +125,8 @@ if has("gui_running")
     set guioptions-=r "remove right scrollbar always present
     set guioptions-=R "remove right scrollbar present on split
 else
-    set timeoutlen=1000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
+    "set timeoutlen=1000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
+    set timeoutlen=5000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
 
     set termencoding=utf-8 "set default encoding
 
@@ -219,11 +203,13 @@ set nofoldenable "dont fold by default
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
-set completeopt=menuone,preview
+"set completeopt=menuone,preview
+set completeopt=menu,menuone,noinsert
+"set completeopt=menu,menuone,noinsert
 
 " command completion
 " make use of the "status line" to show possible completions of command line commands, file names, and more
-set wildmode=list:longest "display all matches and complete till longest common string
+set wildmode=list:longest,full "first tab completes command to longest common match, next tabs iterates thru list
 set wildmenu "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*~ "stuff to ignore when tab completing
 
@@ -260,6 +246,8 @@ imap <S-CR> <Esc>o
 
 "make changes undoable
 inoremap <C-r> <C-g>u<C-r>
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
 
 " mappings to make "Y" work from the cursor to the end of line (which is more logical, but not Vi-compatible)
 map Y y$
@@ -360,11 +348,15 @@ let g:vlh_repository_dir = "~/.vimlocalhistory"
 "or othe stufff
 
 nmap <D-1> :NERDTreeToggle<CR>
+nmap <leader><leader>t :NERDTreeToggle<CR>
+nmap <leader>ft :NERDTreeToggle<CR>
 
 nmap <A-F1> :NERDTreeFind<CR>
+nmap <leader>fl :NERDTreeFind<CR>
 
 command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
 nmap <D-7> :TagbarToggleFocusAutoClose<CR>
+nmap <leader>fg :TagbarToggleFocusAutoClose<CR>
 
 "toggle relative/absolute line numbers by utilizing myusuf3/numbers.vim
 nnoremap <leader><leader># :NumbersToggle<CR> 
@@ -383,14 +375,34 @@ nmap <leader>nl :BLines<CR>
 nmap <leader>nm :Marks<CR>
 nmap <leader>nw :Windows<CR>
 
+"Ack settings
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
 
-" <Leader>f{char} to move to {char}
-map  s <Plug>(easymotion-bd-f)
-nmap s <Plug>(easymotion-overwin-f)
+"Ranger settings
+let g:ranger_map_keys = 0
+map <leader>ar :Ranger<CR>
+map <leader>aR :RangerNewTab<CR>
+map <leader>fr :RangerWorkingDirectory<CR>
+map <leader>fR :RangerWorkingDirectoryNewTab<CR>
 
-" s{char}{char} to move to {char}{char}
-nmap ss <Plug>(easymotion-overwin-f2)
+"EasyMotions settings
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap <leader>jc <Plug>(easymotion-overwin-f)
+nmap <leader>js <Plug>(easymotion-overwin-f2)
+nmap <leader>jw <Plug>(easymotion-overwin-w)
+nmap <leader>jl <Plug>(easymotion-overwin-line)
 
+" ---------------------------------------------------------------------------------------------
+
+
+" ---------------------------------------------------------------------------------------------
+" Diff settings
+" ---------------------------------------------------------------------------------------------
+set diffopt=vertical
+
+let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -437,36 +449,36 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" Syntastic settings
+" Ale settings
 " ---------------------------------------------------------------------------------------------
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+augroup erlang_files "{{{
+    au!
+    autocmd filetype erlang setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    autocmd Filetype erlang let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
+    autocmd Filetype erlang let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
 
-function! s:ToggleSyntasticErrors() abort
-    let is_error_window_visible = !empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") ==# "quickfix"'))
-    if is_error_window_visible
-        execute "lclose"
-    else
-        execute "Errors"
-    endif
-endfunction
-command! ToggleSyntasticErrors :call s:ToggleSyntasticErrors()
-nnoremap <leader><leader>e :ToggleSyntasticErrors<CR>
+    "let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
+    "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
+augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
 " Ruby and Rails settings
 " ---------------------------------------------------------------------------------------------
-let g:syntastic_ruby_mri_exec='~/bin/ruby'
-
-
 augroup ruby_files "{{{
     au!
 
+    set tags+=tags
+    set tags+=gems.tags
+
     autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
+
+    "enable ruby omni completion
+    "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
+    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
     " http://tilvim.com/2013/06/24/live-ruby-execution.html 
     "let g:xmpfilter_cmd = "xmpfilter -a "--no-warnings"
