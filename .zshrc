@@ -104,10 +104,10 @@ export HH_CONFIG=hicolor,blacklist,rawhistory
 export PATH="$PATH:$HOME/.rvm/bin"
 
 # kerl
-DEFAULT_KERL_INSTALLATION=18.1
-if [ -d ~/.kerl/installs/${DEFAULT_KERL_INSTALLATION} ]
+DEFAULT_KERL_INSTALLATION=19.2
+if [ -d ~/.kerl/installations/${DEFAULT_KERL_INSTALLATION} ]
 then
-    source ~/.kerl/installs/${DEFAULT_KERL_INSTALLATION}/activate
+    source ~/.kerl/installations/${DEFAULT_KERL_INSTALLATION}/activate
 fi
 
 # kiex
