@@ -101,7 +101,28 @@ export HISTFILE=~/.zsh_history
 export HH_CONFIG=hicolor,blacklist,rawhistory
 
 # rvm
-export PATH="$PATH:$HOME/.rvm/bin"
+#export PATH="$PATH:$HOME/.rvm/bin"
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# rbenv
+export PATH="/Users/vavaka/.rbenv/shims:${PATH}"
+export RBENV_SHELL=zsh
+source '/usr/local/Cellar/rbenv/1.1.0/libexec/../completions/rbenv.zsh'
+command rbenv rehash 2>/dev/null
+rbenv() {
+  local command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "$(rbenv "sh-$command" "$@")";;
+  *)
+    command rbenv "$command" "$@";;
+  esac
+}
 
 # kerl
 DEFAULT_KERL_INSTALLATION=19.2
@@ -177,3 +198,11 @@ x-bash-backward-delete-word () {
 
 zle -N x-bash-backward-delete-word
 bindkey '^w'  x-bash-backward-delete-word
+
+alias nz='PS_MARKET=nz'
+alias au='PS_MARKET=au'
+alias uk='PS_MARKET=uk'
+
+alias be='bundle exec'
+
+alias nuke='RAILS_ENV=test rake db:drop db:create db:schema:load db:migrate'

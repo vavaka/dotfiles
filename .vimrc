@@ -17,8 +17,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'mileszs/ack.vim'
 "Plug 'rking/ag.vim'
-Plug 'albfan/ag.vim'
-Plug 'mileszs/ack.vim'
+Plug 'albfan/ag.vim'                " used because of AgGroup command
 Plug 'tpope/vim-unimpaired'         " navigate between files, buffers, errors and etc
 Plug 'junegunn/fzf'                 " Fuzzy Finder
 Plug 'junegunn/fzf.vim'
@@ -37,16 +36,19 @@ Plug 'hjdivad/vimlocalhistory'
 Plug 'MattesGroeger/vim-bookmarks'
 
 " Programming
-Plug 'w0rp/ale'
+Plug 'vavaka/ale'
+"Plug 'w0rp/ale'
 Plug 'vavaka/tagbar'
 "Plug 'majutsushi/tagbar'
+Plug 'craigemery/vim-autotag'
 Plug 'ddollar/nerdcommenter'
 "Plug 'ervandew/supertab'
 "Plug 'jiangmiao/auto-pairs'
 "Plug 'Shougo/neocomplcache.vim'
 "Plug 'vim-scripts/AutoComplPop'
 "Plug 'tmhedberg/matchit'
-Plug 'tpope/vim-cucumber'
+Plug 'vavaka/vim-cucumber'
+Plug 'chiel92/vim-autoformat'
 
 " Snippets
 "Plug 'MarcWeber/vim-addon-mw-utils' " vim-snipmate dependency
@@ -75,6 +77,7 @@ Plug 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes 
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-rails'
 Plug 'skalnik/vim-vroom' " A vim plugin for running your Ruby tests
+Plug 'vavaka/vim-test' " A Vim wrapper for running tests on different granularities, use fork from vavaka for environment variables specification support
 Plug 't9md/vim-ruby-xmpfilter' " ruby live in-place execution
 Plug 'tpope/vim-endwise'
 Plug 'kana/vim-textobj-user'
@@ -82,6 +85,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
+Plug 'kchmck/vim-coffee-script'
 
 " Erlang
 Plug 'vim-erlang/vim-erlang-runtime'
@@ -125,8 +129,8 @@ if has("gui_running")
     set guioptions-=r "remove right scrollbar always present
     set guioptions-=R "remove right scrollbar present on split
 else
-    "set timeoutlen=1000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
-    set timeoutlen=5000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
+    set timeoutlen=1000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
+    "set timeoutlen=5000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
 
     set termencoding=utf-8 "set default encoding
 
@@ -218,6 +222,8 @@ au filetype vim set formatoptions-=o "somehow, during vim filetype detection, th
 set formatoptions+=c "wrap comments using textwidth
 set formatoptions+=r "add comment leader after pushing new line
 
+set previewheight=20
+
 " turn off matching parenthesis, brackets, braces
 let g:loaded_matchparen=1
 
@@ -225,6 +231,12 @@ let g:loaded_matchparen=1
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
+" ---------------------------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------------------------
+" Leader
+" ---------------------------------------------------------------------------------------------
+let mapleader = " "
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -239,6 +251,8 @@ nmap ➀ <D-1>
 nmap ➆ <D-7>
 
 nmap 𝟏 <A-F1>
+" ---------------------------------------------------------------------------------------------
+
 " ---------------------------------------------------------------------------------------------
 " Editor settings
 " ---------------------------------------------------------------------------------------------
@@ -327,6 +341,7 @@ nnoremap <leader>tc :tabclose<CR>
 " Plugins settings
 " ---------------------------------------------------------------------------------------------
 
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-n>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-p>"
@@ -349,19 +364,19 @@ let g:vlh_repository_dir = "~/.vimlocalhistory"
 
 nmap <D-1> :NERDTreeToggle<CR>
 nmap <leader><leader>t :NERDTreeToggle<CR>
-nmap <leader>ft :NERDTreeToggle<CR>
+nmap <leader>at :NERDTreeToggle<CR>
 
 nmap <A-F1> :NERDTreeFind<CR>
 nmap <leader>fl :NERDTreeFind<CR>
 
 command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
 nmap <D-7> :TagbarToggleFocusAutoClose<CR>
-nmap <leader>fg :TagbarToggleFocusAutoClose<CR>
+nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
 
 "toggle relative/absolute line numbers by utilizing myusuf3/numbers.vim
 nnoremap <leader><leader># :NumbersToggle<CR> 
 
-nnoremap <leader>s :Ag<Space>
+nnoremap <leader>s :AgGroup<Space>
 
 nmap <leader>nf :Files<CR>
 nmap <leader>ng :GFiles<CR>
@@ -389,11 +404,30 @@ map <leader>fR :RangerWorkingDirectoryNewTab<CR>
 
 "EasyMotions settings
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap <leader>jf <Plug>(easymotion-fl)
 nmap <leader>jc <Plug>(easymotion-overwin-f)
 nmap <leader>js <Plug>(easymotion-overwin-f2)
 nmap <leader>jw <Plug>(easymotion-overwin-w)
 nmap <leader>jl <Plug>(easymotion-overwin-line)
 
+"VimTest settings
+nmap <leader>tn :TestNearest<CR>
+nmap <leader>tf :TestFile<CR>
+nmap <leader>ts :TestSuite<CR>
+nmap <leader>tl :TestLast<CR>
+nmap <leader>tv :TestVisit<CR>
+
+"Fugitive settings
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>gb :Gblame<CR>
+
+nmap <leader>wf :windo diffthis<CR>
+nmap <leader>wF :diffoff<CR>
+
+"Options settings
+nmap <leader>op :set invpaste<CR>
+nmap <leader>oh :nohl<CR>
 " ---------------------------------------------------------------------------------------------
 
 
@@ -465,6 +499,18 @@ augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 " Ruby and Rails settings
 " ---------------------------------------------------------------------------------------------
+"Powershop settings
+let test#env="PS_MARKET=uk"
+:command PSUK :let test#env="PS_MARKET=uk"
+:command PSNZ :let test#env="PS_MARKET=nz"
+:command PSAU :let test#env="PS_MARKET=au"
+
+let test#ruby#rspec#options = {
+  \ 'nearest': '--format documentation --backtrace',
+  \ 'file':    '--format documentation',
+  \ 'suite':   '--tag ~slow',
+\}
+
 augroup ruby_files "{{{
     au!
 
@@ -476,9 +522,9 @@ augroup ruby_files "{{{
 
     "enable ruby omni completion
     "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
-    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+    "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+    "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+    "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
     " http://tilvim.com/2013/06/24/live-ruby-execution.html 
     "let g:xmpfilter_cmd = "xmpfilter -a "--no-warnings"
@@ -495,21 +541,17 @@ augroup ruby_files "{{{
 
     autocmd FileType ruby nmap <buffer> <leader>rm <Plug>(seeing_is_believing-mark)
     autocmd FileType ruby xmap <buffer> <leader>rm <Plug>(seeing_is_believing-mark)
-    autocmd FileType ruby imap <buffer> <leader>rm <Plug>(seeing_is_believing-mark)
 
     autocmd FileType ruby nmap <buffer> <leader>rc <Plug>(seeing_is_believing-clean)
     autocmd FileType ruby xmap <buffer> <leader>rc <Plug>(seeing_is_believing-clean)
-    autocmd FileType ruby imap <buffer> <leader>rc <Plug>(seeing_is_believing-clean)
 
     " xmpfilter compatible
     autocmd FileType ruby nmap <buffer> <leader>rr <Plug>(seeing_is_believing-run_-x)
     autocmd FileType ruby xmap <buffer> <leader>rr <Plug>(seeing_is_believing-run_-x)
-    autocmd FileType ruby imap <buffer> <leader>rr <Plug>(seeing_is_believing-run_-x)
 
     " auto insert mark at appropriate spot.
     autocmd FileType ruby nmap <buffer> <leader>ra <Plug>(seeing_is_believing-run)
     autocmd FileType ruby xmap <buffer> <leader>ra <Plug>(seeing_is_believing-run)
-    autocmd FileType ruby imap <buffer> <leader>ra <Plug>(seeing_is_believing-run)
     
     function! SIBMarkAndRun(mode) " {{{
       call xmpfilter#mark(a:mode)
@@ -518,6 +560,5 @@ augroup ruby_files "{{{
 
     autocmd FileType ruby nmap <buffer> <leader>rx :call SIBMarkAndRun('n')<CR> 
     autocmd FileType ruby xmap <buffer> <leader>rx :call SIBMarkAndRun('v')<CR> 
-    autocmd FileType ruby imap <buffer> <leader>rx <Esc>:call SIBMarkAndRun('i')<CR>a 
 augroup end " }}}
 " ---------------------------------------------------------------------------------------------
