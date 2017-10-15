@@ -12,15 +12,24 @@ set nocompatible " Be iMproved
 " VimPlug Required
 call plug#begin('~/.vim/plugged')
 
-" Files/buffers navigation
-Plug 'scrooloose/nerdtree'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'mileszs/ack.vim'
-"Plug 'rking/ag.vim'
-Plug 'albfan/ag.vim'                " used because of AgGroup command
+" Basic
 Plug 'tpope/vim-unimpaired'         " navigate between files, buffers, errors and etc
+
+" Colors
+Plug 'flazz/vim-colorschemes'
+Plug 'chriskempson/base16-vim'
+
+" Search
+Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf'                 " Fuzzy Finder
 Plug 'junegunn/fzf.vim'
+
+" Files
+Plug 'scrooloose/nerdtree'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_existed_dir/file.txt
+
+" Buffers
 Plug 'qpkorr/vim-bufkill'           " kill buffer using ':BD' without closing a window
 
 " Editor
@@ -30,44 +39,33 @@ Plug 'chrisbra/NrrwRgn'             " edit visual block in separate split window
 Plug 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
 Plug 'tpope/vim-surround'           " surround visual block with quotes, braces, brackets 'S'
 Plug 'mbbill/undotree'
-Plug 'sjl/gundo.vim'
-Plug 'serby/vim-historic'
-Plug 'hjdivad/vimlocalhistory'
 Plug 'MattesGroeger/vim-bookmarks'
 
 " Programming
-Plug 'vavaka/ale'
-"Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'vavaka/tagbar'
 "Plug 'majutsushi/tagbar'
-Plug 'craigemery/vim-autotag'
 Plug 'ddollar/nerdcommenter'
 "Plug 'ervandew/supertab'
-"Plug 'jiangmiao/auto-pairs'
-"Plug 'Shougo/neocomplcache.vim'
-"Plug 'vim-scripts/AutoComplPop'
-"Plug 'tmhedberg/matchit'
+Plug 'jiangmiao/auto-pairs'
 Plug 'vavaka/vim-cucumber'
 Plug 'chiel92/vim-autoformat'
+Plug 'chrisbra/vim-diff-enhanced'
 
 " Snippets
-"Plug 'MarcWeber/vim-addon-mw-utils' " vim-snipmate dependency
-"Plug 'tomtom/tlib_vim' " vim-snipmate dependency 
-"Plug 'garbas/vim-snipmate' " snippets engine
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets' "snippets repository
 
 " Misc
-Plug 'flazz/vim-colorschemes'
-Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'chrisbra/vim-diff-enhanced'
-"Plug 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_existed_dir/file.txt
 
 " Git
-Plug 'tpope/vim-fugitive'
+Plug 'vavaka/vim-fugitive' " use my fork as it supports opening diffs in new tab
+"Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
 
 " Tmux
 Plug 'benmills/vimux'                   " Create 20% split under current pane and run command in it, useful for tests
@@ -167,11 +165,12 @@ set sidescroll=1
 set history=1000 "store lots of :cmdline history
 
 " undo settings
-if v:version >= 703
-    set undofile
-    set undodir=~/.vim/undofiles
-endif
+set undodir=$HOME/.vim/undofiles
 set undolevels=1000 "use many muchos levels of undo
+set undofile
+
+" semicolon means it starts in the cur dir and searches up directories until it hits a tags file
+set tags=tags;
 
 " setup line wrap settihngs
 set wrap! "dont wrap lines
@@ -217,15 +216,22 @@ set wildmode=list:longest,full "first tab completes command to longest common ma
 set wildmenu "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*~ "stuff to ignore when tab completing
 
-set formatoptions-=o "don't add comment leader after pushing new line
-au filetype vim set formatoptions-=o "somehow, during vim filetype detection, this gets set for vim files, so explicitly unset it again
-set formatoptions+=c "wrap comments using textwidth
-set formatoptions+=r "add comment leader after pushing new line
+au filetype vim set formatoptions-=o " somehow, during vim filetype detection, this gets set for vim files, so explicitly unset it again
+set formatoptions+=c " wrap comments using textwidth
+set formatoptions+=r " insert comment leader after hitting <Enter> in Insert mode
+set formatoptions-=o " insert comment leader after hitting 'o' or 'O' in Normal mode
+set formatoptions+=j " delete comment leader when joining commented lines
+
+" do not save window and buffer options in session file
+set sessionoptions-=options
 
 set previewheight=20
 
 " turn off matching parenthesis, brackets, braces
 let g:loaded_matchparen=1
+
+" load matchit, it is included in distribution but is not loaded by default
+runtime! macros/matchit.vim
 
 "set statusline=%f
 "set statusline+=%#warningmsg#
@@ -243,7 +249,7 @@ let mapleader = " "
 " UTF symbols to keys mappings
 " ---------------------------------------------------------------------------------------------
 " mapping utf symbols to keys because terminal emulator does not distinguish
-" between non printing characyers
+" between non printing characters
 " http://stackoverflow.com/questions/5388562/cant-map-s-cr-in-vim
 imap ⮐ <S-CR>
 
@@ -319,6 +325,7 @@ function! s:ZoomToggle() abort
         vertical resize
     endif
 endfunction
+
 command! ZoomToggle :call s:ZoomToggle()
 nnoremap <leader><leader>z :ZoomToggle<CR>
 " ---------------------------------------------------------------------------------------------
@@ -326,14 +333,7 @@ nnoremap <leader><leader>z :ZoomToggle<CR>
 " ---------------------------------------------------------------------------------------------
 " Tab settings
 " ---------------------------------------------------------------------------------------------
-function! s:EditBufferInNewTab() abort
-    let l:current_buf_num = bufnr('%')
-    execute 'tabnew'
-    execute 'b '.l:current_buf_num
-endfunction
-command! EditBufferInNewTab :call s:EditBufferInNewTab()
-nnoremap <leader>tb :EditBufferInNewTab<CR>
-
+nnoremap <leader>tb :tabedit %<CR>
 nnoremap <leader>tc :tabclose<CR>
 " ---------------------------------------------------------------------------------------------
 
@@ -348,23 +348,15 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
-" Scratch settings
-let g:scratch_no_mappings = 1
-
 " Airline settings
 let g:airline#extensions#tabline#enabled = 1 "display tabline
 let g:airline#extensions#tabline#buffer_nr_show = 1 "display buffer numbers in tabline
 
-" vim-historic settings
-let g:historicBackupRepoLocation = "~/.vimlocalhistory"
-
-let g:vlh_repository_dir = "~/.vimlocalhistory"
-
-"or othe stufff
+"other stufff
 
 nmap <D-1> :NERDTreeToggle<CR>
 nmap <leader><leader>t :NERDTreeToggle<CR>
-nmap <leader>at :NERDTreeToggle<CR>
+nmap <leader>ft :NERDTreeToggle<CR>
 
 nmap <A-F1> :NERDTreeFind<CR>
 nmap <leader>fl :NERDTreeFind<CR>
@@ -375,8 +367,6 @@ nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
 
 "toggle relative/absolute line numbers by utilizing myusuf3/numbers.vim
 nnoremap <leader><leader># :NumbersToggle<CR> 
-
-nnoremap <leader>s :AgGroup<Space>
 
 nmap <leader>nf :Files<CR>
 nmap <leader>ng :GFiles<CR>
@@ -390,10 +380,21 @@ nmap <leader>nl :BLines<CR>
 nmap <leader>nm :Marks<CR>
 nmap <leader>nw :Windows<CR>
 
+" fuzzy-finder in a specific directory
+command! -nargs=* -complete=dir DFiles call fzf#run(fzf#wrap(
+  \ {'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
+  \  'sink': 'Files'}))
+nmap <leader>nF :DFiles<CR>
+
 "Ack settings
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
+
+let g:ackhighlight = 1
+let g:ack_use_cword_for_empty_search = 1
+
+nnoremap <leader>s :Ack!<Space>
 
 "Ranger settings
 let g:ranger_map_keys = 0
@@ -419,9 +420,13 @@ nmap <leader>tv :TestVisit<CR>
 
 "Fugitive settings
 nmap <leader>gs :Gstatus<CR>
-nmap <leader>gd :Gdiff<CR>
 nmap <leader>gb :Gblame<CR>
 
+" show diff in a separate tab
+command! Gtdiff :execute("tabedit % | Gdiff")
+nmap <leader>gd :Gtdiff<CR>
+
+"Diff settings
 nmap <leader>wf :windo diffthis<CR>
 nmap <leader>wF :diffoff<CR>
 
@@ -437,24 +442,6 @@ nmap <leader>oh :nohl<CR>
 set diffopt=vertical
 
 let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-" ---------------------------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------------------------
-" Shell settings
-" ---------------------------------------------------------------------------------------------
-" VimShell settings
-let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-
-" NeoTerm settings
-nnoremap <silent> <leader><leader>r :T clear<cr> " hide terminal
-nnoremap <silent> <leader>rc :call neoterm#close()<cr> " close terminal
-nnoremap <silent> <leader>rl :call neoterm#clear()<cr> " clear terminal
-nnoremap <silent> <leader>rk :call neoterm#kill()<cr> " kills the current job (send a <c-c>)
-
-nnoremap <silent> <leader>rS :TREPLSendFile<cr> " sends the current file to a REPL in a terminal
-nnoremap <silent> <leader>rs :TREPLSend<cr> " sends the current line to a REPL in a terminal.
-vnoremap <silent> <leader>rs :TREPLSend<cr> " sends selection to a REPL in a terminal.
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -475,9 +462,6 @@ autocmd filetype svn,*commit* setlocal spell
 let g:gitgutter_realtime = 1
 let g:gitgutter_eager = 1
 
-" Git commands
-command! -nargs=+ Tg :T git <args>
-
 " delete Fugitive buffers on leave
 autocmd BufReadPost fugitive://* set bufhidden=delete
 " ---------------------------------------------------------------------------------------------
@@ -497,14 +481,15 @@ augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
+" Tags settings
+" ---------------------------------------------------------------------------------------------
+let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=.svn --exclude=tmp --exclude=log ."
+command! RebuildTags :execute("!".g:ctags_command)
+" ---------------------------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------------------------
 " Ruby and Rails settings
 " ---------------------------------------------------------------------------------------------
-"Powershop settings
-let test#env="PS_MARKET=uk"
-:command PSUK :let test#env="PS_MARKET=uk"
-:command PSNZ :let test#env="PS_MARKET=nz"
-:command PSAU :let test#env="PS_MARKET=au"
-
 let test#ruby#rspec#options = {
   \ 'nearest': '--format documentation --backtrace',
   \ 'file':    '--format documentation',
@@ -514,8 +499,7 @@ let test#ruby#rspec#options = {
 augroup ruby_files "{{{
     au!
 
-    set tags+=tags
-    set tags+=gems.tags
+    let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
 
     autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
@@ -562,3 +546,14 @@ augroup ruby_files "{{{
     autocmd FileType ruby xmap <buffer> <leader>rx :call SIBMarkAndRun('v')<CR> 
 augroup end " }}}
 " ---------------------------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------------------------
+" Powershop settings
+" ---------------------------------------------------------------------------------------------
+let test#env="PS_MARKET=uk"
+
+command! PSUK :let test#env="PS_MARKET=uk"
+command! PSNZ :let test#env="PS_MARKET=nz"
+command! PSAU :let test#env="PS_MARKET=au"
+" ---------------------------------------------------------------------------------------------
+
