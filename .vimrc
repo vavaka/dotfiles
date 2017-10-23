@@ -381,10 +381,49 @@ nmap <leader>nm :Marks<CR>
 nmap <leader>nw :Windows<CR>
 
 " fuzzy-finder in a specific directory
-command! -nargs=* -complete=dir DFiles call fzf#run(fzf#wrap(
-  \ {'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
-  \  'sink': 'Files'}))
+command! -nargs=* -complete=dir DFiles call fzf#run(fzf#wrap({
+  \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
+  \  'sink': 'Files'
+\}))
 nmap <leader>nF :DFiles<CR>
+
+function! s:DirSink(lines)
+  if len(a:lines) < 2
+    return
+  endif
+
+  let s:action = {
+    \ 'ctrl-r': 'e',
+  \}
+
+  let cmd = get(s:action, a:lines[0], 'e')
+  execute 'silent' cmd a:lines[1]
+endfunction
+
+" fuzzy-finder in a specific directory
+command! -nargs=* -complete=dir Dirs call fzf#run(fzf#wrap({
+ \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
+ \  'sink*': function('s:DirSink'),
+ \  'options': ['--expect=ctrl-r'],
+ \}))
+
+function! s:append_dir_with_fzf(line)
+  call fzf#run(fzf#wrap({
+    \ 'options': ['--prompt', a:line.'> '],
+    \ 'source': 'find . -type d -not -path "./.*"',
+    \ 'sink': {line -> feedkeys(line, 'n')}}))
+  return ''
+endfunction
+cnoremap <expr> <c-x><c-d> <sid>append_dir_with_fzf(getcmdline())
+
+function! s:append_file_with_fzf(line)
+  call fzf#run(fzf#wrap({
+    \ 'options': ['--prompt', a:line.'> '],
+    \ 'source': 'find . -type f -not -path "./.*"',
+    \ 'sink': {line -> feedkeys(line, 'n')}}))
+  return ''
+endfunction
+cnoremap <expr> <c-x><c-f> <sid>append_file_with_fzf(getcmdline())
 
 "Ack settings
 if executable('ag')
@@ -442,6 +481,11 @@ nmap <leader>oh :nohl<CR>
 set diffopt=vertical
 
 let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+
+if &diff
+  " do not fold in diff mode
+  set diffopt=filler,context:1000000 " filler is default and inserts empty lines for sync
+endif
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -478,6 +522,14 @@ augroup erlang_files "{{{
     "let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
     "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
 augroup end " }}}
+
+call ale#linter#Define('eruby', {
+  \ 'name': 'erubylint',
+  \ 'executable': 'erb',
+  \ 'output_stream': 'stderr',
+  \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
+  \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
+\})
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
