@@ -369,6 +369,7 @@ nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
 nnoremap <leader><leader># :NumbersToggle<CR> 
 
 nmap <leader>nf :Files<CR>
+nmap <leader>nd :Dirs<CR>
 nmap <leader>ng :GFiles<CR>
 nmap <leader>nG :GFiles?<CR>
 nmap <leader>nb :Buffers<CR>
@@ -380,31 +381,25 @@ nmap <leader>nl :BLines<CR>
 nmap <leader>nm :Marks<CR>
 nmap <leader>nw :Windows<CR>
 
-" fuzzy-finder in a specific directory
-command! -nargs=* -complete=dir DFiles call fzf#run(fzf#wrap({
-  \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
-  \  'sink': 'Files'
-\}))
-nmap <leader>nF :DFiles<CR>
+function! s:fzf_chain(dict, lines)
+  let new_dict = a:dict
+  let new_dict.source = a:lines
 
-function! s:DirSink(lines)
-  if len(a:lines) < 2
-    return
-  endif
-
-  let s:action = {
-    \ 'ctrl-r': 'e',
-  \}
-
-  let cmd = get(s:action, a:lines[0], 'e')
-  execute 'silent' cmd a:lines[1]
+  call fzf#run(fzf#wrap(new_dict))                                 
 endfunction
+
+let $FZF_DEFAULT_OPTS = '--multi --bind ctrl-a:toggle-all'
+let g:fzf_action = {
+  \ 'ctrl-f': 'Files',
+  \ 'ctrl-d': 'Dirs',
+  \ 'ctrl-s': function('s:fzf_chain'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " fuzzy-finder in a specific directory
 command! -nargs=* -complete=dir Dirs call fzf#run(fzf#wrap({
  \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
- \  'sink*': function('s:DirSink'),
- \  'options': ['--expect=ctrl-r'],
  \}))
 
 function! s:append_dir_with_fzf(line)
