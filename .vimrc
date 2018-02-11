@@ -33,7 +33,6 @@ Plug 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_ex
 Plug 'qpkorr/vim-bufkill'           " kill buffer using ':BD' without closing a window
 
 " Editor
-Plug 'myusuf3/numbers.vim'          " toggle absulute/relative line numbers <leader><leader>#
 Plug 'Lokaltog/vim-easymotion'      " quick navigation 's'
 Plug 'chrisbra/NrrwRgn'             " edit visual block in separate split window <leader>nr
 Plug 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
@@ -46,7 +45,6 @@ Plug 'w0rp/ale'
 Plug 'vavaka/tagbar'
 "Plug 'majutsushi/tagbar'
 Plug 'ddollar/nerdcommenter'
-"Plug 'ervandew/supertab'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vavaka/vim-cucumber'
 Plug 'chiel92/vim-autoformat'
@@ -59,10 +57,11 @@ Plug 'honza/vim-snippets' "snippets repository
 " Misc
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Git
 Plug 'vavaka/vim-fugitive' " use my fork as it supports opening diffs in new tab
-"Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
@@ -349,8 +348,22 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
 " Airline settings
-let g:airline#extensions#tabline#enabled = 1 "display tabline
-let g:airline#extensions#tabline#buffer_nr_show = 1 "display buffer numbers in tabline
+let g:airline#extensions#keymap#enabled = 0
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number"
+
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 "other stufff
 
@@ -433,17 +446,13 @@ nnoremap <leader>s :Ack!<Space>
 "Ranger settings
 let g:ranger_map_keys = 0
 map <leader>ar :Ranger<CR>
-map <leader>aR :RangerNewTab<CR>
-map <leader>fr :RangerWorkingDirectory<CR>
-map <leader>fR :RangerWorkingDirectoryNewTab<CR>
+map <leader>fr :RangerCurrentFile<CR>
 
 "EasyMotions settings
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-nmap <leader>jf <Plug>(easymotion-fl)
-nmap <leader>jc <Plug>(easymotion-overwin-f)
-nmap <leader>js <Plug>(easymotion-overwin-f2)
-nmap <leader>jw <Plug>(easymotion-overwin-w)
-nmap <leader>jl <Plug>(easymotion-overwin-line)
+nmap <leader>jf <Plug>(easymotion-fl) " jump to character within line
+nmap <leader>jc <Plug>(easymotion-overwin-f) " jump to character withing window
+nmap <leader>js <Plug>(easymotion-overwin-f2) " jump to 2 characters withing window
 
 "VimTest settings
 nmap <leader>tn :TestNearest<CR>
@@ -481,14 +490,6 @@ if &diff
   " do not fold in diff mode
   set diffopt=filler,context:1000000 " filler is default and inserts empty lines for sync
 endif
-" ---------------------------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------------------------
-" Tmux settings
-" ---------------------------------------------------------------------------------------------
-vmap <C-c><C-c> <Plug>SendSelectionToTmux
-nmap <C-c><C-c> <Plug>NormalModeSendToTmux
-nmap <C-c>r <Plug>SetTmuxVars
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -551,46 +552,13 @@ augroup ruby_files "{{{
     autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
 
+    autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
     "enable ruby omni completion
     "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
     "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
     "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
     "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-
-    " http://tilvim.com/2013/06/24/live-ruby-execution.html 
-    "let g:xmpfilter_cmd = "xmpfilter -a "--no-warnings"
-
-    "autocmd FileType ruby nmap <buffer> <leader>rm <Plug>(xmpfilter-mark)
-    "autocmd FileType ruby xmap <buffer> <leader>rm <Plug>(xmpfilter-mark)
-    "autocmd FileType ruby imap <buffer> <leader>rm <Plug>(xmpfilter-mark)
-
-    "autocmd FileType ruby nmap <buffer> <leader>rr <Plug>(xmpfilter-run)
-    "autocmd FileType ruby xmap <buffer> <leader>rr <Plug>(xmpfilter-run)
-    "autocmd FileType ruby imap <buffer> <leader>rr <Plug>(xmpfilter-run)
-
-    let g:xmpfilter_cmd = "seeing_is_believing"
-
-    autocmd FileType ruby nmap <buffer> <leader>rm <Plug>(seeing_is_believing-mark)
-    autocmd FileType ruby xmap <buffer> <leader>rm <Plug>(seeing_is_believing-mark)
-
-    autocmd FileType ruby nmap <buffer> <leader>rc <Plug>(seeing_is_believing-clean)
-    autocmd FileType ruby xmap <buffer> <leader>rc <Plug>(seeing_is_believing-clean)
-
-    " xmpfilter compatible
-    autocmd FileType ruby nmap <buffer> <leader>rr <Plug>(seeing_is_believing-run_-x)
-    autocmd FileType ruby xmap <buffer> <leader>rr <Plug>(seeing_is_believing-run_-x)
-
-    " auto insert mark at appropriate spot.
-    autocmd FileType ruby nmap <buffer> <leader>ra <Plug>(seeing_is_believing-run)
-    autocmd FileType ruby xmap <buffer> <leader>ra <Plug>(seeing_is_believing-run)
-    
-    function! SIBMarkAndRun(mode) " {{{
-      call xmpfilter#mark(a:mode)
-      call xmpfilter#run(a:mode, '-x')
-    endfunction "}}}
-
-    autocmd FileType ruby nmap <buffer> <leader>rx :call SIBMarkAndRun('n')<CR> 
-    autocmd FileType ruby xmap <buffer> <leader>rx :call SIBMarkAndRun('v')<CR> 
 augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 
@@ -603,4 +571,3 @@ command! PSUK :let test#env="PS_MARKET=uk"
 command! PSNZ :let test#env="PS_MARKET=nz"
 command! PSAU :let test#env="PS_MARKET=au"
 " ---------------------------------------------------------------------------------------------
-
