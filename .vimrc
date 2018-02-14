@@ -1,3 +1,4 @@
+" ---------------------------------------------------------------------------------------------
 " Initialization
 " ---------------------------------------------------------------------------------------------
 if 0 | endif " Skip initialization for vim-tiny or vim-small 
@@ -6,31 +7,34 @@ set nocompatible " Be iMproved
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" Plugins
+" Plugin declarations
 " ---------------------------------------------------------------------------------------------
 
 " VimPlug Required
 call plug#begin('~/.vim/plugged')
 
 " Basic
-Plug 'tpope/vim-unimpaired'         " navigate between files, buffers, errors and etc
-
-" Colors
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
-Plug 'chriskempson/base16-vim'
+Plug 'tpope/vim-unimpaired' " navigate between files, buffers, errors and etc
+Plug 'qpkorr/vim-bufkill' " kill buffer using ':BD' without closing a window
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes using same key bindings
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets' " snippets repository
 
 " Search
 Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf'                 " Fuzzy Finder
+Plug 'junegunn/fzf' " Fuzzy Finder
 Plug 'junegunn/fzf.vim'
 
-" Files
+" Filesystem
 Plug 'scrooloose/nerdtree'
 Plug 'francoiscabrol/ranger.vim'
-Plug 'datawraith/auto_mkdir' "auto create parent directories on ':e /path/not_existed_dir/file.txt
-
-" Buffers
-Plug 'qpkorr/vim-bufkill'           " kill buffer using ':BD' without closing a window
+Plug 'datawraith/auto_mkdir' " auto create parent directories on ':e /path/not_existed_dir/file.txt
 
 " Editor
 Plug 'Lokaltog/vim-easymotion'      " quick navigation 's'
@@ -38,7 +42,6 @@ Plug 'chrisbra/NrrwRgn'             " edit visual block in separate split window
 Plug 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
 Plug 'tpope/vim-surround'           " surround visual block with quotes, braces, brackets 'S'
 Plug 'mbbill/undotree'
-Plug 'MattesGroeger/vim-bookmarks'
 
 " Programming
 Plug 'w0rp/ale'
@@ -46,36 +49,19 @@ Plug 'vavaka/tagbar'
 "Plug 'majutsushi/tagbar'
 Plug 'ddollar/nerdcommenter'
 Plug 'jiangmiao/auto-pairs'
-Plug 'vavaka/vim-cucumber'
 Plug 'chiel92/vim-autoformat'
 Plug 'chrisbra/vim-diff-enhanced'
 
-" Snippets
-Plug 'sirver/ultisnips'
-Plug 'honza/vim-snippets' "snippets repository
-
-" Misc
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-
 " Git
 Plug 'vavaka/vim-fugitive' " use my fork as it supports opening diffs in new tab
-Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
-
-" Tmux
-Plug 'benmills/vimux'                   " Create 20% split under current pane and run command in it, useful for tests
-Plug 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes using same key bindings
+Plug 'jreybert/vimagit'
 
 " Ruby and Rails
-Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-rails'
-Plug 'skalnik/vim-vroom' " A vim plugin for running your Ruby tests
+Plug 'vavaka/vim-cucumber'
 Plug 'vavaka/vim-test' " A Vim wrapper for running tests on different granularities, use fork from vavaka for environment variables specification support
-Plug 't9md/vim-ruby-xmpfilter' " ruby live in-place execution
 Plug 'tpope/vim-endwise'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
@@ -136,10 +122,7 @@ else
     let g:solarized_termcolors=256
 endif
 
-set background=dark
-"colorscheme solarized
 colorscheme Tomorrow-Night
-highlight clear SignColumn " fix Sign color, related to Solarized theme
 
 set hidden " hide buffers when not displayed 
 
@@ -207,7 +190,6 @@ set omnifunc=syntaxcomplete#Complete
 
 "set completeopt=menuone,preview
 set completeopt=menu,menuone,noinsert
-"set completeopt=menu,menuone,noinsert
 
 " command completion
 " make use of the "status line" to show possible completions of command line commands, file names, and more
@@ -231,11 +213,6 @@ let g:loaded_matchparen=1
 
 " load matchit, it is included in distribution but is not loaded by default
 runtime! macros/matchit.vim
-
-"set statusline=%f
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -245,24 +222,8 @@ let mapleader = " "
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" UTF symbols to keys mappings
-" ---------------------------------------------------------------------------------------------
-" mapping utf symbols to keys because terminal emulator does not distinguish
-" between non printing characters
-" http://stackoverflow.com/questions/5388562/cant-map-s-cr-in-vim
-imap ⮐ <S-CR>
-
-nmap ➀ <D-1>
-nmap ➆ <D-7>
-
-nmap 𝟏 <A-F1>
-" ---------------------------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------------------------
 " Editor settings
 " ---------------------------------------------------------------------------------------------
-imap <S-CR> <Esc>o
-
 "make changes undoable
 inoremap <C-r> <C-g>u<C-r>
 inoremap <c-u> <c-g>u<c-u>
@@ -298,7 +259,7 @@ vmap s y:%s/<C-R>"//gc<LEFT><LEFT><LEFT>
 " ---------------------------------------------------------------------------------------------
 " Windows settings
 " ---------------------------------------------------------------------------------------------
-" splitting
+" navigation between windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -306,12 +267,6 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <C-w>S <C-w>s<C-w>j " split window horizontally and move cursor to new window
 nnoremap <C-w>V <C-w>v<C-w>l " split window vertically and move cursor to new window 
-
-" resizing
-"nnoremap ) 5<c-w>> " increase window width
-"nnoremap ( 5<c-w>< " decrease window width
-"nnoremap + 5<c-w>+ " increase window height
-"nnoremap _ 5<c-w>- " decrease window height
 
 " zooming
 function! s:ZoomToggle() abort
@@ -326,7 +281,7 @@ function! s:ZoomToggle() abort
 endfunction
 
 command! ZoomToggle :call s:ZoomToggle()
-nnoremap <leader><leader>z :ZoomToggle<CR>
+nnoremap <leader>Z :ZoomToggle<CR>
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
@@ -342,8 +297,6 @@ nnoremap <leader>tc :tabclose<CR>
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-n>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
@@ -367,19 +320,13 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 
 "other stufff
 
-nmap <D-1> :NERDTreeToggle<CR>
-nmap <leader><leader>t :NERDTreeToggle<CR>
-nmap <leader>ft :NERDTreeToggle<CR>
-
-nmap <A-F1> :NERDTreeFind<CR>
+nmap <leader>T :NERDTreeToggle<CR>
 nmap <leader>fl :NERDTreeFind<CR>
 
-command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
-nmap <D-7> :TagbarToggleFocusAutoClose<CR>
-nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
+nmap <leader>U :UndotreeToggle<CR>
 
-"toggle relative/absolute line numbers by utilizing myusuf3/numbers.vim
-nnoremap <leader><leader># :NumbersToggle<CR> 
+command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
+nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
 
 nmap <leader>nf :Files<CR>
 nmap <leader>nd :Dirs<CR>
@@ -441,11 +388,11 @@ endif
 let g:ackhighlight = 1
 let g:ack_use_cword_for_empty_search = 1
 
-nnoremap <leader>s :Ack!<Space>
+nnoremap <leader>S :Ack!<Space>
 
 "Ranger settings
 let g:ranger_map_keys = 0
-map <leader>ar :Ranger<CR>
+map <leader>R :Ranger<CR>
 map <leader>fr :RangerCurrentFile<CR>
 
 "EasyMotions settings
@@ -470,14 +417,32 @@ command! Gtdiff :execute("tabedit % | Gdiff")
 nmap <leader>gd :Gtdiff<CR>
 
 "Diff settings
-nmap <leader>wf :windo diffthis<CR>
-nmap <leader>wF :diffoff<CR>
+function! s:DiffToggle() abort
+    if exists('t:diff_mode')
+        diffoff
+        unlet t:diff_mode
+    else
+        let t:diff_mode = 1
+        execute "windo diffthis"
+    endif
+endfunction
+command! DiffToggle :call s:DiffToggle()
+nnoremap <leader>D :DiffToggle<CR>
+
+"Autoformat settings
+nmap <leader>F :Autoformat<CR>
 
 "Options settings
 nmap <leader>op :set invpaste<CR>
 nmap <leader>oh :nohl<CR>
 " ---------------------------------------------------------------------------------------------
 
+" ---------------------------------------------------------------------------------------------
+" Tags settings
+" ---------------------------------------------------------------------------------------------
+let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=.svn --exclude=tmp --exclude=log ."
+command! RebuildTags :execute("!".g:ctags_command)
+" ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
 " Diff settings
@@ -485,15 +450,10 @@ nmap <leader>oh :nohl<CR>
 set diffopt=vertical
 
 let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-
-if &diff
-  " do not fold in diff mode
-  set diffopt=filler,context:1000000 " filler is default and inserts empty lines for sync
-endif
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" SCM settings
+" Version control settings
 " ---------------------------------------------------------------------------------------------
 " spell check when writing commit logs
 autocmd filetype svn,*commit* setlocal spell
@@ -507,7 +467,7 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" Ale settings
+" Erlang settings
 " ---------------------------------------------------------------------------------------------
 augroup erlang_files "{{{
     au!
@@ -519,31 +479,11 @@ augroup erlang_files "{{{
     "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
 augroup end " }}}
 
-call ale#linter#Define('eruby', {
-  \ 'name': 'erubylint',
-  \ 'executable': 'erb',
-  \ 'output_stream': 'stderr',
-  \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
-  \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
-\})
-" ---------------------------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------------------------
-" Tags settings
-" ---------------------------------------------------------------------------------------------
-let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=.svn --exclude=tmp --exclude=log ."
-command! RebuildTags :execute("!".g:ctags_command)
 " ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
 " Ruby and Rails settings
 " ---------------------------------------------------------------------------------------------
-let test#ruby#rspec#options = {
-  \ 'nearest': '--format documentation --backtrace',
-  \ 'file':    '--format documentation',
-  \ 'suite':   '--tag ~slow',
-\}
-
 augroup ruby_files "{{{
     au!
 
@@ -559,6 +499,20 @@ augroup ruby_files "{{{
     "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
     "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
     "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+    let test#ruby#rspec#options = {
+      \ 'nearest': '--format documentation --backtrace',
+      \ 'file':    '--format documentation',
+      \ 'suite':   '--tag ~slow',
+    \}
+
+    call ale#linter#Define('eruby', {
+      \ 'name': 'erubylint',
+      \ 'executable': 'erb',
+      \ 'output_stream': 'stderr',
+      \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
+      \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
+    \})
 augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 
