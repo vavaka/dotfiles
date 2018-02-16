@@ -1,70 +1,71 @@
-" ---------------------------------------------------------------------------------------------
-" Initialization
-" ---------------------------------------------------------------------------------------------
-if 0 | endif " Skip initialization for vim-tiny or vim-small 
-
-set nocompatible " Be iMproved
-" ---------------------------------------------------------------------------------------------
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
 
 " ---------------------------------------------------------------------------------------------
-" Plugin declarations
+" Vim-Plug
+" https://github.com/junegunn/vim-plug
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " ---------------------------------------------------------------------------------------------
-
-" VimPlug Required
 call plug#begin('~/.vim/plugged')
 
 " Basic
-Plug 'bling/vim-airline'
+Plug 'bling/vim-airline'                  " lean & mean status/tabline
 Plug 'vim-airline/vim-airline-themes'
-Plug 'flazz/vim-colorschemes'
-Plug 'tpope/vim-unimpaired' " navigate between files, buffers, errors and etc
-Plug 'qpkorr/vim-bufkill' " kill buffer using ':BD' without closing a window
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'vavaka/vim-tmux-navigator'   " Navigate between vim splits and tmux panes using same key bindings
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'sirver/ultisnips'
-Plug 'honza/vim-snippets' " snippets repository
+Plug 'flazz/vim-colorschemes'             " color schemes mega pack
+Plug 'chriskempson/base16-vim'             " color schemes mega pack
+Plug 'tpope/vim-unimpaired'               " navigate between files, buffers, errors and etc
+Plug 'qpkorr/vim-bufkill'                 " kill buffer using ':BD' without closing a window
+Plug 'MattesGroeger/vim-bookmarks'        " plugin for toggling annotated persisted bookmarks
+Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
+Plug 'junegunn/goyo.vim'                  " distraction-free writing, ':Goyo'
+Plug 'junegunn/limelight.vim'             " hyperfocus-writing, ':Limelight'
+Plug 'sirver/ultisnips'                   " snippets engine
+Plug 'honza/vim-snippets'                 " snippets repository
 
 " Search
-Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf' " Fuzzy Finder
-Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'                    " integration with Ack and Ag grepping tools
+Plug 'vavaka/fzf'                         " fzf wrapper
+Plug 'junegunn/fzf.vim'                   " fzf commands
 
 " Filesystem
-Plug 'scrooloose/nerdtree'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'datawraith/auto_mkdir' " auto create parent directories on ':e /path/not_existed_dir/file.txt
+Plug 'scrooloose/nerdtree'                " tree explorer
+Plug 'francoiscabrol/ranger.vim'          " Ranger file manager integration with Vim
+Plug 'datawraith/auto_mkdir'              " auto create parent directories on ':e /path/not_existed_dir/file.txt
+
+" Formatting
+Plug 'chiel92/vim-autoformat'             " provide easy code formatting by integrating existing code formatters
+Plug 'godlygeek/tabular'                  " script for text filtering and alignment, ':Tab /,/l1c1l0'
 
 " Editor
-Plug 'Lokaltog/vim-easymotion'      " quick navigation 's'
-Plug 'chrisbra/NrrwRgn'             " edit visual block in separate split window <leader>nr
-Plug 'terryma/vim-multiple-cursors' " edit similar entries at once <c-n> <c-p> <c-x>
-Plug 'tpope/vim-surround'           " surround visual block with quotes, braces, brackets 'S'
-Plug 'mbbill/undotree'
+Plug 'Lokaltog/vim-easymotion'            " Vim motions on speed
+Plug 'chrisbra/NrrwRgn'                   " edit visual block in separate split window
+Plug 'tpope/vim-surround'                 " surround visual block with quotes, braces, brackets
+Plug 'mbbill/undotree'                    " undo tree visualizer
+Plug 'terryma/vim-multiple-cursors'       " edit similar entries at once <c-n> <c-p> <c-x>
 
 " Programming
-Plug 'w0rp/ale'
-Plug 'vavaka/tagbar'
+Plug 'w0rp/ale'                           " asynchronous Lint Engine
+Plug 'vavaka/tagbar'                      " displays tags in a window, ordered by scope
 "Plug 'majutsushi/tagbar'
-Plug 'ddollar/nerdcommenter'
-Plug 'jiangmiao/auto-pairs'
-Plug 'chiel92/vim-autoformat'
-Plug 'chrisbra/vim-diff-enhanced'
+Plug 'chrisbra/vim-diff-enhanced'         " make use of the Patience diff algorithm
+Plug 'jiangmiao/auto-pairs'               " insert or delete brackets, parens, quotes in pair
+Plug 'tpope/vim-endwise'                  " endwise.vim: wisely add 'end' in ruby, 'endfunction/endif/more' in vim script, etc
+Plug 'ddollar/nerdcommenter'              " commenting engine
 
 " Git
-Plug 'vavaka/vim-fugitive' " use my fork as it supports opening diffs in new tab
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/gv.vim'
-Plug 'jreybert/vimagit'
+Plug 'vavaka/vim-fugitive'                " Git integration, use my fork as it supports opening diffs in new tab
+Plug 'airblade/vim-gitgutter'             " shows diff in the gutter (sign column) and stages/undoes hunks
+Plug 'junegunn/gv.vim'                    " commit browser
+Plug 'jreybert/vimagit'                   " stage file, hunks or even just parts of a hunk
 
 " Ruby and Rails
 Plug 'tpope/vim-rails'
 Plug 'vavaka/vim-cucumber'
-Plug 'vavaka/vim-test' " A Vim wrapper for running tests on different granularities, use fork from vavaka for environment variables specification support
-Plug 'tpope/vim-endwise'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'vavaka/vim-test'                    " wrapper for running tests on different granularities, use fork from 'vavaka' for environment variables support
+Plug 'kana/vim-textobj-user'              " create your own text objects
+Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines
+Plug 'tek/vim-textobj-ruby'               " text objects for Ruby block, function, class
 
 " Javascript
 Plug 'pangloss/vim-javascript'
@@ -78,174 +79,174 @@ Plug 'vim-erlang/vim-erlang-tags'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim' "tags navigation becomes available only after `mix phoneix.server`
+Plug 'slashmili/alchemist.vim'            " tags navigation becomes available only after `mix phoneix.server`
 
 " Haskell
 Plug 'eagletmt/ghcmod-vim'
 Plug 'eagletmt/neco-ghc'
 
-" Initialize plugin system
+" load matchit, it is included in distribution but is not loaded by default
+runtime! macros/matchit.vim
+
 call plug#end()
-" ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
-" Vim settings
+" Basic settings
 " ---------------------------------------------------------------------------------------------
+let mapleader = " "
+
 syntax on
+color Tomorrow-Night
+let base16colorspace=256
+"let g:solarized_termcolors=256
+"set background=light
+"color solarized
 
-" setup swp
-set nobackup "do not keep backup files, it's 70's style cluttering
-set noswapfile "do not write annoying intermediate swap files
-set backupdir=~/.vim/.tmp,~/tmp,/tmp "store backup files in one of these directories (in case swapfile is ever turned on)
-set directory=~/.vim/.tmp,~/tmp,/tmp "store swap files in one of these directories (in case swapfile is ever turned on)
+" enable filetype-specific plugins
+filetype plugin on
 
+" disable matching parenthesis, brackets, braces highlighting due to performance issues
+let g:loaded_matchparen=1
+
+" do not use Ex mode, use Q for formatting
+map Q gq
+
+" make Y work from the cursor to the end of line
+map Y y$
+
+nmap <silent> <leader><leader>p :set invpaste<CR>
+
+" ---------------------------------------------------------------------------------------------
+" GUI settings
+" ---------------------------------------------------------------------------------------------
 if has("gui_running")
-    set lines=999 columns=999 "maximize gvim window to fill the entire window
+  " maximize gvim window to fill the entire window
+  set lines=999 columns=999 
 
-    set encoding=utf-8 "set default encoding
-    "set guifont=DejaVu\ Sans\ Mono\ 14 "set font
-    set guifont=Monaco:h13 "set font
+  set guioptions-=T "remove toolbar
+  set guioptions-=l "remove left scrollbar always present 
+  set guioptions-=L "remove left scrollbar present on split
+  set guioptions-=r "remove right scrollbar always present
+  set guioptions-=R "remove right scrollbar present on split
 
-    set guioptions-=T "remove toolbar
-    set guioptions-=l "remove left scrollbar always present 
-    set guioptions-=L "remove left scrollbar present on split
-    set guioptions-=r "remove right scrollbar always present
-    set guioptions-=R "remove right scrollbar present on split
-else
-    set timeoutlen=1000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
-    "set timeoutlen=5000 ttimeoutlen=0 "set small timeout in order to make faster exit from VISUAL mode http://stackoverflow.com/questions/15550100/exit-visual-mode-without-delay
-
-    set termencoding=utf-8 "set default encoding
-
-    set t_Co=256 "use 256 colors in terminal
-
-    let g:solarized_termcolors=256
+  set guifont=Monaco:h13
+  "set guifont=DejaVu\ Sans\ Mono\ 14
 endif
 
-colorscheme Tomorrow-Night
+" ---------------------------------------------------------------------------------------------
+" Terminal settings
+" ---------------------------------------------------------------------------------------------
+if !has("gui_running")
+  set t_Co=256        " use 256 colors in terminal
 
-set hidden " hide buffers when not displayed 
+  set ttimeout        " time out for key codes
+  set ttimeoutlen=100 " wait up to 100ms after Esc for special key
+endif
 
-" setup language settings
-set keymap=russian-jcukenwin
-set iminsert=0
-set imsearch=0
+" ---------------------------------------------------------------------------------------------
+" UI settings
+" ---------------------------------------------------------------------------------------------
+set number           " show line numbers
+set norelativenumber " disable relative numbers due to performance issues
+set nocursorline     " disable current line highlighting due to performance issues
+set ruler            " show the line and column number of the cursor position
+set showcmd          " show incomplete cmds down the bottom
+set showmode         " show current mode down the bottom
+set laststatus=2     " display status lines for each window
+set previewheight=20 " set preview window height, used by <ctrl-w }> tag navigation
 
-set number "show line numbers
+" ---------------------------------------------------------------------------------------------
+" Mouse settings
+" ---------------------------------------------------------------------------------------------
+if has('mouse')
+  set mouse=a " Enable maouse for all modes
+endif
 
-set ruler "show the line and column number of the cursor position
-set showcmd "show incomplete cmds down the bottom
-set showmode "show current mode down the bottom set hidden "hide buffers when not displayed
-set cmdheight=2 "set status bar height
-set laststatus=2 "always display status line
+" ---------------------------------------------------------------------------------------------
+" Scrolling settings
+" ---------------------------------------------------------------------------------------------
+set scrolloff=5     " minimal number of screen lines to keep above and below the cursor
+set sidescrolloff=7 " minimal number of screen columns to keep to the left and to the right of the cursor
+set sidescroll=1    " scroll left and right by one character 
+" speed up scrolling of the viewport slightly
+nnoremap <C-e> 5<C-y>
+nnoremap <C-d> 5<C-e>
+nnoremap <C-y> <C-d>
 
-" vertical/horizontal scroll off settings
-set scrolloff=3
-set sidescrolloff=7
-set sidescroll=1
+nnoremap <C-f> <C-d>
+nnoremap <C-b> <C-u>
 
-set history=1000 "store lots of :cmdline history
+" ---------------------------------------------------------------------------------------------
+" Formatting settings
+" ---------------------------------------------------------------------------------------------
+filetype indent on   " enable filetype-specific indenting
 
-" undo settings
-set undodir=$HOME/.vim/undofiles
-set undolevels=1000 "use many muchos levels of undo
-set undofile
+set nowrap           " do not wrap long lines
 
-" semicolon means it starts in the cur dir and searches up directories until it hits a tags file
-set tags=tags;
-
-" setup line wrap settihngs
-set wrap! "dont wrap lines
-set linebreak "don't wrap comment lines
-
-" display tabs and trailing spaces
-"set list
-"set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
-
-set virtualedit=all "move to the last character in the line, not past it
-set backspace=indent,eol,start "allow backspacing over everything in insert mode
-
-" setup incremental search settings
-set incsearch "find the next match as we type the search
-set hlsearch "highlight searches by default
-set ignorecase " ignore case when searching
-set smartcase " ignore case if search pattern is all lowercase, case-sensitive otherwise
-
-" indent settings
-filetype plugin indent on " apply different indent settings for different file types
-set tabstop=4     "tab width is 4 spaces
-set shiftwidth=4  "indent command inserts 4 spaces
-set softtabstop=4 "backspace removes 4 spaces
-set expandtab     "expand tabs to spaces
 set autoindent
+set tabstop=4        " tab width is 4 spaces
+set shiftwidth=4     " indent command inserts 4 spaces
+set softtabstop=4    " backspace removes 4 spaces
+set expandtab        " expand tabs to spaces
 
-" folding settings
-"set foldmethod=syntax "for some reason autocompletion is super slow if this option is on
-set foldnestmax=3 "deepest fold is 3 levels
-set foldlevel=0 "don't fold everything on zc
-set nofoldenable "dont fold by default
-
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-
-"set completeopt=menuone,preview
-set completeopt=menu,menuone,noinsert
-
-" command completion
-" make use of the "status line" to show possible completions of command line commands, file names, and more
-set wildmode=list:longest,full "first tab completes command to longest common match, next tabs iterates thru list
-set wildmenu "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*~ "stuff to ignore when tab completing
-
-au filetype vim set formatoptions-=o " somehow, during vim filetype detection, this gets set for vim files, so explicitly unset it again
 set formatoptions+=c " wrap comments using textwidth
 set formatoptions+=r " insert comment leader after hitting <Enter> in Insert mode
 set formatoptions-=o " insert comment leader after hitting 'o' or 'O' in Normal mode
 set formatoptions+=j " delete comment leader when joining commented lines
 
-" do not save window and buffer options in session file
-set sessionoptions-=options
-
-set previewheight=20
-
-" turn off matching parenthesis, brackets, braces
-let g:loaded_matchparen=1
-
-" load matchit, it is included in distribution but is not loaded by default
-runtime! macros/matchit.vim
-" ---------------------------------------------------------------------------------------------
+nmap <silent> <leader><leader>f :Autoformat<CR>
 
 " ---------------------------------------------------------------------------------------------
-" Leader
+" Encoding, keymap, chars settings
 " ---------------------------------------------------------------------------------------------
-let mapleader = " "
-" ---------------------------------------------------------------------------------------------
+if has("gui_running")
+  set encoding=utf-8
+else
+  set termencoding=utf-8
+endif
+
+" switch to russian with ctrl-^
+" as a side effect it sets new keymap as current for insert and search modes
+" so we need to reset input methods for these modes
+set keymap=russian-jcukenwin 
+set iminsert=0
+set imsearch=0
+set imsearch=0
+
+" move to the last character in the line, not past it
+set virtualedit=all            
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" display non-printable chars
+set list
+set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,eol:¬,space:·
+
+function! s:NonPrintableCharsToggle() abort
+  if &list
+    set nolist
+  else
+    set list
+  endif
+endfunction
+command! NonPrintableCharsToggle :call s:NonPrintableCharsToggle()
+nnoremap <silent> <leader><leader>` :NonPrintableCharsToggle<CR>
 
 " ---------------------------------------------------------------------------------------------
-" Editor settings
+" Folding settings
 " ---------------------------------------------------------------------------------------------
-"make changes undoable
-inoremap <C-r> <C-g>u<C-r>
-inoremap <c-u> <c-g>u<c-u>
-inoremap <c-w> <c-g>u<c-w>
-
-" mappings to make "Y" work from the cursor to the end of line (which is more logical, but not Vi-compatible)
-map Y y$
-
-" speed up scrolling of the viewport slightly
-nnoremap <C-e> 5<C-e>
-nnoremap <C-y> 5<C-y>
-
-" mappings for sudo to write
-cmap w!! w !sudo tee % >/dev/null
-
-command! CDC cd %:p:h
-" ---------------------------------------------------------------------------------------------
+set foldmethod=indent " use indent driven folding as for some reason syntax driven folding is super slow
+set foldnestmax=3     " deepest fold is 3 levels
+set foldlevel=0       " do not fold everything on zc
+set nofoldenable      " do not fold by default
 
 " ---------------------------------------------------------------------------------------------
-" Text search settings
+" Search settings
 " ---------------------------------------------------------------------------------------------
-nnoremap <leader><CR> : nohl<CR>
+set incsearch  " find the next match as we type the search
+set hlsearch   " highlight searches by default
+set ignorecase " ignore case when searching
+set smartcase  " ignore case if search pattern is all lowercase, case-sensitive otherwise
 
 " turn off Vim's crazy default regex characters and makes searches use normal regexes
 nnoremap / /\v
@@ -254,7 +255,96 @@ vnoremap / /\v
 " mappings for search and replace of selected text
 vmap / y/<C-R>"<CR>
 vmap s y:%s/<C-R>"//gc<LEFT><LEFT><LEFT>
+
+" keep cursor on the current word
+nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+nnoremap <silent> g* :let @/='<C-R>=expand("<cword>")<CR>'<CR>:set hls<CR>
+
+" clear highlighting
+nnoremap <silent> <leader><leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+
 " ---------------------------------------------------------------------------------------------
+" Text completion settings
+" ---------------------------------------------------------------------------------------------
+" setup text completion
+" 'menu'     - use a popup menu to show the possible completions
+" 'menuone'  - use the popup menu also when there is only one match
+" 'noinsert' - do not insert any text for a match until the user selects a match from the menu
+set completeopt=menu,menuone,noinsert
+
+" by default Vim searches for completions in many locations including tags
+" in large projects searching in tags is slow so removing it
+set complete-=t
+
+" omni completion based on the current syntax highlights
+set omnifunc=syntaxcomplete#Complete
+
+" ---------------------------------------------------------------------------------------------
+" Command line settings
+" ---------------------------------------------------------------------------------------------
+set cmdheight=2  " set sommand line height
+set history=1000 " store lots of :cmdline history
+
+" set up command line completion
+" list:longest - when more than one match, list all matches and complete till longest common string
+" full - complete the next full match
+set wildmode=list:longest,full
+" enable ctrl-n and ctrl-p to jump thru matches
+set wildmenu
+" stuff to ignore when tab completing
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*~
+
+" ---------------------------------------------------------------------------------------------
+" Backup settings
+" ---------------------------------------------------------------------------------------------
+" do not keep backup files
+set nobackup
+" store backup files in one of these directories (in case backup is ever turned on)
+set backupdir=~/.vim/.tmp,~/tmp,/tmp 
+
+" do not write annoying intermediate swap files
+set noswapfile
+" store swap files in one of these directories (in case swapfile is ever turned on)
+set directory=~/.vim/.tmp,~/tmp,/tmp 
+
+" ---------------------------------------------------------------------------------------------
+" Undo settings
+" ---------------------------------------------------------------------------------------------
+" enable persistent undo
+set undofile
+set undodir=$HOME/.vim/undofiles
+set undolevels=1000
+
+"make changes undoable
+inoremap <C-r> <C-g>u<C-r>
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
+nmap <silent> <leader><leader>u :UndotreeToggle<CR>
+
+" ---------------------------------------------------------------------------------------------
+" Grep settings
+" ---------------------------------------------------------------------------------------------
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+let g:ackhighlight = 1
+let g:ack_use_cword_for_empty_search = 1
+
+nnoremap <leader><leader>s :Ack!<Space>
+
+" ---------------------------------------------------------------------------------------------
+" Buffers settings
+" ---------------------------------------------------------------------------------------------
+" hide buffers when not displayed
+set hidden
+
+" mappings for sudo to write
+cmap w!! w !sudo tee % >/dev/null 
+
+" change working dir to base dir of current buffer
+command! CDC cd %:p:h
 
 " ---------------------------------------------------------------------------------------------
 " Windows settings
@@ -270,77 +360,106 @@ nnoremap <C-w>V <C-w>v<C-w>l " split window vertically and move cursor to new wi
 
 " zooming
 function! s:ZoomToggle() abort
-    if exists('t:zoom_winrestcmd')
-        execute t:zoom_winrestcmd
-        unlet t:zoom_winrestcmd
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-    endif
+  if exists('t:zoom_winrestcmd')
+    execute t:zoom_winrestcmd
+    unlet t:zoom_winrestcmd
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+  endif
 endfunction
 
 command! ZoomToggle :call s:ZoomToggle()
-nnoremap <leader>Z :ZoomToggle<CR>
-" ---------------------------------------------------------------------------------------------
+nnoremap <silent> <leader><leader>z :ZoomToggle<CR>
 
 " ---------------------------------------------------------------------------------------------
-" Tab settings
+" Tabs settings
 " ---------------------------------------------------------------------------------------------
-nnoremap <leader>tb :tabedit %<CR>
-nnoremap <leader>tc :tabclose<CR>
-" ---------------------------------------------------------------------------------------------
+nnoremap <silent> <leader>tb :tabedit %<CR>
+nnoremap <silent> <leader>tc :tabclose<CR>
 
 " ---------------------------------------------------------------------------------------------
-" Plugins settings
+" Sessions settings
 " ---------------------------------------------------------------------------------------------
+" do not save window and buffer options in session file
+set sessionoptions-=options
 
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" ---------------------------------------------------------------------------------------------
+" Version control settings
+" ---------------------------------------------------------------------------------------------
+" spell check when writing commit logs
+autocmd filetype svn,*commit* setlocal spell
 
-" Airline settings
-let g:airline#extensions#keymap#enabled = 0
+" delete Fugitive buffers on leave
+autocmd BufReadPost fugitive://* set bufhidden=delete 
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number"
+" diff against the HEAD instead of the index
+let g:gitgutter_diff_base = 'HEAD' 
 
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <silent> <leader>gs :Gstatus<CR>
+nmap <silent> <leader>gb :Gblame<CR>
+nmap <silent> <leader>gl :GV --max-count 2000<CR>
 
-"other stufff
+" show diff in a separate tab
+command! Gtdiff :execute("tabedit % | Gdiff")
+nmap <silent> <leader>gd :Gtdiff<CR>
 
-nmap <leader>T :NERDTreeToggle<CR>
-nmap <leader>fl :NERDTreeFind<CR>
+" ---------------------------------------------------------------------------------------------
+" Diff settings
+" ---------------------------------------------------------------------------------------------
+" by default split windows vertically
+set diffopt=vertical 
 
-nmap <leader>U :UndotreeToggle<CR>
+" use Patience algorithm for git diff
+let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 
-command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
-nmap <leader>f] :TagbarToggleFocusAutoClose<CR>
+" toggle diff mode
+function! s:DiffToggle() abort
+  if &diff
+    diffoff
+  else
+    execute "windo diffthis"
+  endif
+endfunction
+command! DiffToggle :call s:DiffToggle()
+nnoremap <silent> <leader>dt :DiffToggle<CR>
 
-nmap <leader>nf :Files<CR>
-nmap <leader>nd :Dirs<CR>
-nmap <leader>ng :GFiles<CR>
-nmap <leader>nG :GFiles?<CR>
-nmap <leader>nb :Buffers<CR>
-nmap <leader>ne :History<CR>
-nmap <leader>nt :Tags<CR>
-nmap <leader>nh :Helptags<CR>
-nmap <leader>ns :History/<CR>
-nmap <leader>nl :BLines<CR>
-nmap <leader>nm :Marks<CR>
-nmap <leader>nw :Windows<CR>
+" show unsaved changes in as a diff in new tab
+command! DiffOrig tabedit % | vert new 
+  \ | set bt=nofile | exe "set ft=".getbufvar('#', '&filetype') 
+  \ | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
+nnoremap <silent> <leader>do :DiffOrig<CR>
 
+" ---------------------------------------------------------------------------------------------
+" Run settings
+" ---------------------------------------------------------------------------------------------
+"VimTest mappings
+nmap <silent> <leader>rn :TestNearest<CR>
+nmap <silent> <leader>rf :TestFile<CR>
+nmap <silent> <leader>rs :TestSuite<CR>
+nmap <silent> <leader>rl :TestLast<CR>
+nmap <silent> <leader>rv :TestVisit<CR>
+
+" ---------------------------------------------------------------------------------------------
+" File managers settings
+" ---------------------------------------------------------------------------------------------
+let g:netrw_keepdir= 0 " auto set netrw current directory to browsing directory
+
+" NERDTree
+let g:NERDTreeHijackNetrw=0
+nmap <silent> <leader><leader>t :NERDTreeToggle<CR>
+" find current file  in NERDTree
+nmap <silent> <leader>fl :NERDTreeFind<CR>
+
+"Ranger
+let g:ranger_map_keys = 0
+map <silent> <leader><leader>r :Ranger<CR>
+map <silent> <leader>fr :RangerCurrentFile<CR>
+
+" ---------------------------------------------------------------------------------------------
+" FZF settings
+" ---------------------------------------------------------------------------------------------
 function! s:fzf_chain(dict, lines)
   let new_dict = a:dict
   let new_dict.source = a:lines
@@ -380,148 +499,144 @@ function! s:append_file_with_fzf(line)
 endfunction
 cnoremap <expr> <c-x><c-f> <sid>append_file_with_fzf(getcmdline())
 
-"Ack settings
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
+nmap <silent> <leader>nf :Files<CR>
+nmap <silent> <leader>nd :Dirs<CR>
+nmap <silent> <leader>ng :GFiles<CR>
+nmap <silent> <leader>nG :GFiles?<CR>
+nmap <silent> <leader>nb :Buffers<CR>
+nmap <silent> <leader>ne :History<CR>
+nmap <silent> <leader>nt :BTags<CR>
+nmap <silent> <leader>nT :Tags<CR>
+nmap <silent> <leader>nh :Helptags<CR>
+nmap <silent> <leader>ns :History/<CR>
+nmap <silent> <leader>nc :History:<CR>
+nmap <silent> <leader>nl :BLines<CR>
+nmap <silent> <leader>nm :Marks<CR>
+nmap <silent> <leader>nw :Windows<CR>
 
-let g:ackhighlight = 1
-let g:ack_use_cword_for_empty_search = 1
-
-nnoremap <leader>S :Ack!<Space>
-
-"Ranger settings
-let g:ranger_map_keys = 0
-map <leader>R :Ranger<CR>
-map <leader>fr :RangerCurrentFile<CR>
-
-"EasyMotions settings
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-nmap <leader>jf <Plug>(easymotion-fl) " jump to character within line
-nmap <leader>jc <Plug>(easymotion-overwin-f) " jump to character withing window
-nmap <leader>js <Plug>(easymotion-overwin-f2) " jump to 2 characters withing window
-
-"VimTest settings
-nmap <leader>tn :TestNearest<CR>
-nmap <leader>tf :TestFile<CR>
-nmap <leader>ts :TestSuite<CR>
-nmap <leader>tl :TestLast<CR>
-nmap <leader>tv :TestVisit<CR>
-
-"Fugitive settings
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gb :Gblame<CR>
-
-" show diff in a separate tab
-command! Gtdiff :execute("tabedit % | Gdiff")
-nmap <leader>gd :Gtdiff<CR>
-
-"Diff settings
-function! s:DiffToggle() abort
-    if exists('t:diff_mode')
-        diffoff
-        unlet t:diff_mode
-    else
-        let t:diff_mode = 1
-        execute "windo diffthis"
-    endif
-endfunction
-command! DiffToggle :call s:DiffToggle()
-nnoremap <leader>D :DiffToggle<CR>
-
-"Autoformat settings
-nmap <leader>F :Autoformat<CR>
-
-"Options settings
-nmap <leader>op :set invpaste<CR>
-nmap <leader>oh :nohl<CR>
 " ---------------------------------------------------------------------------------------------
+" Airline settings
+" ---------------------------------------------------------------------------------------------
+let g:airline#extensions#keymap#enabled = 0
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 0
+" disable buffer name displaying in the right of tabline
+let g:airline#extensions#tabline#show_splits = 0
+" display tab numbers
+let g:airline#extensions#tabline#tab_nr_type = 1
+" no need to display tab type as tabline is configured to display only tabs
+let g:airline#extensions#tabline#show_tab_type = 0 
+
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+
+" ---------------------------------------------------------------------------------------------
+" Easy motion settings
+" ---------------------------------------------------------------------------------------------
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+
+nmap s <Plug>(easymotion-overwin-f2)
+nmap t <Plug>(easymotion-sl)
+
+" ---------------------------------------------------------------------------------------------
+" Snippets settings
+" ---------------------------------------------------------------------------------------------
+
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
 " ---------------------------------------------------------------------------------------------
 " Tags settings
 " ---------------------------------------------------------------------------------------------
+" semicolon makes Vim to start in the current dir 
+" and search up directories until it hits a tags file
+set tags=tags; 
+
 let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=.svn --exclude=tmp --exclude=log ."
 command! RebuildTags :execute("!".g:ctags_command)
-" ---------------------------------------------------------------------------------------------
+
+command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
+nmap <silent> <leader>f] :TagbarToggleFocusAutoClose<CR>
 
 " ---------------------------------------------------------------------------------------------
-" Diff settings
+" Vimscript settings
 " ---------------------------------------------------------------------------------------------
-set diffopt=vertical
+augroup vimscript_files "{{{
+  au!
 
-let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-" ---------------------------------------------------------------------------------------------
+  autocmd filetype vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
-" ---------------------------------------------------------------------------------------------
-" Version control settings
-" ---------------------------------------------------------------------------------------------
-" spell check when writing commit logs
-autocmd filetype svn,*commit* setlocal spell
-
-" GitGutter settings
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
-
-" delete Fugitive buffers on leave
-autocmd BufReadPost fugitive://* set bufhidden=delete
-" ---------------------------------------------------------------------------------------------
+  " do not insert comment leader after hitting 'o' or 'O' in Normal mode
+  " it is default setting but somehow, during vim filetype detection
+  " this gets set for vim files, so explicitly unset it again
+  autocmd filetype vim setlocal formatoptions-=o
+augroup end " }}}
 
 " ---------------------------------------------------------------------------------------------
 " Erlang settings
 " ---------------------------------------------------------------------------------------------
 augroup erlang_files "{{{
-    au!
-    autocmd filetype erlang setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-    autocmd Filetype erlang let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
-    autocmd Filetype erlang let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
+  au!
+  autocmd filetype erlang setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd Filetype erlang let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
+  autocmd Filetype erlang let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
 
-    "let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
-    "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
+  "let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
+  "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
 augroup end " }}}
 
 " ---------------------------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------------------------
-" Ruby and Rails settings
+" Ruby/Rails settings
 " ---------------------------------------------------------------------------------------------
 augroup ruby_files "{{{
-    au!
+  au!
 
-    let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
+  let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
 
-    autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-    autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
+  autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
 
-    autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
-    "enable ruby omni completion
-    "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
-    "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-    "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-    "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+  "enable ruby omni completion
+  "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
+  "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+  "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+  "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
-    let test#ruby#rspec#options = {
-      \ 'nearest': '--format documentation --backtrace',
-      \ 'file':    '--format documentation',
-      \ 'suite':   '--tag ~slow',
-    \}
+  let test#ruby#rspec#options = {
+    \ 'nearest': '--format documentation --backtrace',
+    \ 'file':    '--format documentation',
+    \ 'suite':   '--tag ~slow',
+  \}
 
-    call ale#linter#Define('eruby', {
-      \ 'name': 'erubylint',
-      \ 'executable': 'erb',
-      \ 'output_stream': 'stderr',
-      \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
-      \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
-    \})
+  call ale#linter#Define('eruby', {
+    \ 'name': 'erubylint',
+    \ 'executable': 'erb',
+    \ 'output_stream': 'stderr',
+    \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
+    \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
+  \})
 augroup end " }}}
-" ---------------------------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------------------------
 " Powershop settings
 " ---------------------------------------------------------------------------------------------
-let test#env="PS_MARKET=uk"
+let test#env="PS_MARKET=uk BROWSER=chrome"
 
 command! PSUK :let test#env="PS_MARKET=uk"
 command! PSNZ :let test#env="PS_MARKET=nz"
 command! PSAU :let test#env="PS_MARKET=au"
-" ---------------------------------------------------------------------------------------------
+
