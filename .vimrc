@@ -13,7 +13,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'                  " lean & mean status/tabline
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'             " color schemes mega pack
-Plug 'chriskempson/base16-vim'             " color schemes mega pack
 Plug 'tpope/vim-unimpaired'               " navigate between files, buffers, errors and etc
 Plug 'qpkorr/vim-bufkill'                 " kill buffer using ':BD' without closing a window
 Plug 'MattesGroeger/vim-bookmarks'        " plugin for toggling annotated persisted bookmarks
@@ -96,11 +95,14 @@ call plug#end()
 let mapleader = " "
 
 syntax on
-color Tomorrow-Night
-let base16colorspace=256
-"let g:solarized_termcolors=256
-"set background=light
-"color solarized
+
+"color Tomorrow-Night
+
+let g:solarized_diffmode="high"
+color solarized
+
+set background=light
+
 
 " enable filetype-specific plugins
 filetype plugin on
