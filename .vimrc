@@ -149,13 +149,15 @@ endif
 " UI settings
 " ---------------------------------------------------------------------------------------------
 set number           " show line numbers
-set norelativenumber " disable relative numbers due to performance issues
 set nocursorline     " disable current line highlighting due to performance issues
 set ruler            " show the line and column number of the cursor position
 set showcmd          " show incomplete cmds down the bottom
 set showmode         " show current mode down the bottom
 set laststatus=2     " display status lines for each window
 set previewheight=20 " set preview window height, used by <ctrl-w }> tag navigation
+
+set regexpengine=1 " use old engine as it improves rendering performance
+set relativenumber " use relativenumber only in combination with regexpengine
 
 " ---------------------------------------------------------------------------------------------
 " Mouse settings
