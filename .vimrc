@@ -172,6 +172,7 @@ endif
 set scrolloff=5     " minimal number of screen lines to keep above and below the cursor
 set sidescrolloff=7 " minimal number of screen columns to keep to the left and to the right of the cursor
 set sidescroll=1    " scroll left and right by one character 
+
 " speed up scrolling of the viewport slightly
 nnoremap <C-e> 5<C-y>
 nnoremap <C-d> 5<C-e>
@@ -475,7 +476,7 @@ function! s:fzf_chain(dict, lines)
   let new_dict = a:dict
   let new_dict.source = a:lines
 
-  call fzf#run(fzf#wrap(new_dict))                                 
+  call fzf#run(fzf#wrap(new_dict))
 endfunction
 
 let $FZF_DEFAULT_OPTS = '--multi --bind ctrl-a:toggle-all'
