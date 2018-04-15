@@ -606,11 +606,18 @@ augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 " Erlang settings
 " ---------------------------------------------------------------------------------------------
+" Command to generating Erlang/OTP tags
+" ~/.vim/plugged/vim-erlang-tags/bin/vim-erlang-tags.erl -p -o $_KERL_ACTIVE_DIR/tags
 augroup erlang_files "{{{
   au!
+
   autocmd filetype erlang setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd Filetype erlang let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
   autocmd Filetype erlang let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
+
+  " include Erlang/OTP tags
+  autocmd filetype erlang setlocal tags+=$_KERL_ACTIVE_DIR/tags, 
+
 
   "let find_result = system('find . -name "include" -type d -not -path "./rel/*" -print')[:-2]
   "let g:ale_erlang_erlc_options = '-I apps -I deps -I '. substitute(find_result, '\n', ' -I ', "g")
