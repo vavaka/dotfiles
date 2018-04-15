@@ -556,8 +556,9 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
-nmap s <Plug>(easymotion-overwin-f2)
-nmap t <Plug>(easymotion-sl)
+map s <Plug>(easymotion-overwin-f)
+map S <Plug>(easymotion-overwin-f2)
+map t <Plug>(easymotion-sl)
 
 " ---------------------------------------------------------------------------------------------
 " Snippets settings
