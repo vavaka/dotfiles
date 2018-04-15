@@ -456,6 +456,13 @@ nmap <silent> <leader><leader>t :NERDTreeToggle<CR>
 " find current file  in NERDTree
 nmap <silent> <leader>fl :NERDTreeFind<CR>
 
+augroup nerdtree "{{{
+  au!
+
+  " do not display non-printable chars in NERDTree buffer
+  autocmd filetype nerdtree set nolist
+augroup end " }}}
+
 "Ranger
 let g:ranger_map_keys = 0
 map <silent> <leader><leader>r :Ranger<CR>
