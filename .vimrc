@@ -629,7 +629,7 @@ augroup end " }}}
 augroup ruby_files "{{{
   au!
 
-  let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
+  autocmd filetype ruby let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
 
   autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
