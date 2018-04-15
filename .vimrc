@@ -96,12 +96,12 @@ let mapleader = " "
 
 syntax on
 
-"color Tomorrow-Night
+color Tomorrow-Night
 
-let g:solarized_diffmode="high"
-color solarized
+"let g:solarized_diffmode="high"
+"color solarized
 
-set background=light
+"set background=dark
 
 
 " enable filetype-specific plugins
