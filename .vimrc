@@ -16,7 +16,6 @@ Plug 'flazz/vim-colorschemes'             " color schemes mega pack
 Plug 'tpope/vim-unimpaired'               " navigate between files, buffers, errors and etc
 Plug 'qpkorr/vim-bufkill'                 " kill buffer using ':BD' without closing a window
 Plug 'MattesGroeger/vim-bookmarks'        " plugin for toggling annotated persisted bookmarks
-Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
 Plug 'junegunn/goyo.vim'                  " distraction-free writing, ':Goyo'
 Plug 'junegunn/limelight.vim'             " hyperfocus-writing, ':Limelight'
 Plug 'sirver/ultisnips'                   " snippets engine
@@ -43,6 +42,10 @@ Plug 'tpope/vim-surround'                 " surround visual block with quotes, b
 Plug 'mbbill/undotree'                    " undo tree visualizer
 Plug 'terryma/vim-multiple-cursors'       " edit similar entries at once <c-n> <c-p> <c-x>
 
+" Tmux
+Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
+Plug 'benmills/vimux'                     " vim plugin to interact with tmux
+
 " Programming
 Plug 'w0rp/ale'                           " asynchronous Lint Engine
 Plug 'vavaka/tagbar'                      " displays tags in a window, ordered by scope
@@ -62,6 +65,7 @@ Plug 'jreybert/vimagit'                   " stage file, hunks or even just parts
 Plug 'tpope/vim-rails'
 Plug 'vavaka/vim-cucumber'
 Plug 'vavaka/vim-test'                    " wrapper for running tests on different granularities, use fork from 'vavaka' for environment variables support
+Plug 'skalnik/vim-vroom'                  " vim plugin for running your Ruby tests
 Plug 'kana/vim-textobj-user'              " create your own text objects
 Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines
 Plug 'tek/vim-textobj-ruby'               " text objects for Ruby block, function, class
@@ -391,6 +395,25 @@ nnoremap <silent> <leader>tc :tabclose<CR>
 set sessionoptions-=options
 
 " ---------------------------------------------------------------------------------------------
+" Tmux settings
+" ---------------------------------------------------------------------------------------------
+function! VimuxSlime()
+	try
+    let prev_val = @v
+    normal! "vy
+
+		call VimuxSendText(@v)
+		call VimuxSendKeys("Enter")
+  finally
+    let @v = prev_val
+  endtry
+endfunction
+
+" copy selected text to V regsiter and send later to tmux
+map <Leader>vo :call VimuxOpenRunner()<CR>
+vmap <Leader>vs :call VimuxSlime()<CR>
+
+" ---------------------------------------------------------------------------------------------
 " Version control settings
 " ---------------------------------------------------------------------------------------------
 " spell check when writing commit logs
@@ -627,6 +650,15 @@ augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 " Ruby/Rails settings
 " ---------------------------------------------------------------------------------------------
+let g:vroom_use_vimux = 1
+let g:vroom_ignore_color_flag=1
+let g:vroom_spec_command="rspec -f d"
+"let g:vroom_command_prefix=""
+
+nmap <Leader>vf :VroomRunTestFile<CR>
+nmap <Leader>vn :VroomRunNearestTest<CR>
+nmap <Leader>vl :VroomRunLastTest<CR>
+
 augroup ruby_files "{{{
   au!
 
@@ -657,13 +689,3 @@ augroup ruby_files "{{{
     \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
   \})
 augroup end " }}}
-
-" ---------------------------------------------------------------------------------------------
-" Powershop settings
-" ---------------------------------------------------------------------------------------------
-let test#env="PS_MARKET=uk BROWSER=chrome"
-
-command! PSUK :let test#env="PS_MARKET=uk"
-command! PSNZ :let test#env="PS_MARKET=nz"
-command! PSAU :let test#env="PS_MARKET=au"
-
