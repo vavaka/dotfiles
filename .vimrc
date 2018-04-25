@@ -42,6 +42,11 @@ Plug 'tpope/vim-surround'                 " surround visual block with quotes, b
 Plug 'mbbill/undotree'                    " undo tree visualizer
 Plug 'terryma/vim-multiple-cursors'       " edit similar entries at once <c-n> <c-p> <c-x>
 
+" Completion
+Plug 'Shougo/deoplete.nvim'               " Dark powered asynchronous completion framework
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'           " requires `pip3 install neovim`
+
 " Tmux
 Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
 Plug 'benmills/vimux'                     " vim plugin to interact with tmux
@@ -393,6 +398,11 @@ nnoremap <silent> <leader>tc :tabclose<CR>
 " ---------------------------------------------------------------------------------------------
 " do not save window and buffer options in session file
 set sessionoptions-=options
+
+" ---------------------------------------------------------------------------------------------
+" Completion settings
+" ---------------------------------------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
 
 " ---------------------------------------------------------------------------------------------
 " Tmux settings
