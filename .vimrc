@@ -675,12 +675,12 @@ nmap <Leader>vl :VroomRunLastTest<CR>
 augroup ruby_files "{{{
   au!
 
-  autocmd filetype ruby let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
-
   autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
 
   autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+  autocmd filetype ruby let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
 
   "enable ruby omni completion
   "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
