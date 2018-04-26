@@ -509,6 +509,7 @@ map <silent> <leader>fr :RangerCurrentFile<CR>
 " ---------------------------------------------------------------------------------------------
 " FZF settings
 " ---------------------------------------------------------------------------------------------
+" use selected results of prev search as a source for next search
 function! s:fzf_chain(dict, lines)
   let new_dict = a:dict
   let new_dict.source = a:lines
@@ -516,20 +517,22 @@ function! s:fzf_chain(dict, lines)
   call fzf#run(fzf#wrap(new_dict))
 endfunction
 
-let $FZF_DEFAULT_OPTS = '--multi --bind ctrl-a:toggle-all'
-let g:fzf_action = {
-  \ 'ctrl-f': 'Files',
-  \ 'ctrl-d': 'Dirs',
-  \ 'ctrl-s': function('s:fzf_chain'),
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" fuzzy-finder in a specific directory
+" search for directories
 command! -nargs=* -complete=dir Dirs call fzf#run(fzf#wrap({
  \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
  \}))
 
+" search for file from command mode
+function! s:append_file_with_fzf(line)
+  call fzf#run(fzf#wrap({
+    \ 'options': ['--prompt', a:line.'> '],
+    \ 'source': 'find . -type f -not -path "./.*"',
+    \ 'sink': {line -> feedkeys(line, 'n')}}))
+  return ''
+endfunction
+cnoremap <expr> <c-x><c-f> <sid>append_file_with_fzf(getcmdline())
+
+" search for directory from command mode
 function! s:append_dir_with_fzf(line)
   call fzf#run(fzf#wrap({
     \ 'options': ['--prompt', a:line.'> '],
@@ -539,14 +542,14 @@ function! s:append_dir_with_fzf(line)
 endfunction
 cnoremap <expr> <c-x><c-d> <sid>append_dir_with_fzf(getcmdline())
 
-function! s:append_file_with_fzf(line)
-  call fzf#run(fzf#wrap({
-    \ 'options': ['--prompt', a:line.'> '],
-    \ 'source': 'find . -type f -not -path "./.*"',
-    \ 'sink': {line -> feedkeys(line, 'n')}}))
-  return ''
-endfunction
-cnoremap <expr> <c-x><c-f> <sid>append_file_with_fzf(getcmdline())
+let $FZF_DEFAULT_OPTS = '--multi --bind ctrl-a:toggle-all'
+let g:fzf_action = {
+  \ 'ctrl-f': 'Files',
+  \ 'ctrl-d': 'Dirs',
+  \ 'ctrl-s': function('s:fzf_chain'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 nmap <silent> <leader>nf :Files<CR>
 nmap <silent> <leader>nd :Dirs<CR>
