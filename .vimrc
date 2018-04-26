@@ -20,6 +20,7 @@ Plug 'junegunn/goyo.vim'                  " distraction-free writing, ':Goyo'
 Plug 'junegunn/limelight.vim'             " hyperfocus-writing, ':Limelight'
 Plug 'sirver/ultisnips'                   " snippets engine
 Plug 'honza/vim-snippets'                 " snippets repository
+Plug 'blueyed/vim-diminactive'            " plugin to dim inactive windows
 
 " Search
 Plug 'mileszs/ack.vim'                    " integration with Ack and Ag grepping tools
@@ -49,6 +50,7 @@ Plug 'roxma/vim-hug-neovim-rpc'           " requires `pip3 install neovim`
 
 " Tmux
 Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
+Plug 'tmux-plugins/vim-tmux-focus-events' " make terminal vim and tmux work better together
 Plug 'benmills/vimux'                     " vim plugin to interact with tmux
 
 " Programming
@@ -165,8 +167,10 @@ set showmode         " show current mode down the bottom
 set laststatus=2     " display status lines for each window
 set previewheight=20 " set preview window height, used by <ctrl-w }> tag navigation
 
-set regexpengine=1 " use old engine as it improves rendering performance
-set relativenumber " use relativenumber only in combination with regexpengine
+set regexpengine=1   " use old engine as it improves rendering performance
+set relativenumber   " use relativenumber only in combination with regexpengine
+
+let g:diminactive_enable_focus = 1 " enable inactive window shading
 
 " ---------------------------------------------------------------------------------------------
 " Mouse settings
