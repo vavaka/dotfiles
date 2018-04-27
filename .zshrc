@@ -96,9 +96,9 @@ eval "$(fasd --init auto)"
 # fzf configuration
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND="fd . --hidden --follow --exclude '.git' $HOME"
+export FZF_DEFAULT_COMMAND="fd . --hidden --follow --no-ignore-vcs --exclude '.git' ./"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d --follow --exclude '.git' . $HOME"
+export FZF_ALT_C_COMMAND="fd --type d --follow --no-ignore-vcs --exclude '.git' . $HOME"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
