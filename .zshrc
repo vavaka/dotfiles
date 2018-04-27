@@ -87,6 +87,9 @@ fpath=(~/.zsh/completion $fpath)
 # add user specific binaries to PATH
 export PATH="$PATH:$HOME/bin"
 
+# do not remember commands which starts with space character
+export HISTCONTROL=ignoreboth
+
 # fasd configuration
 eval "$(fasd --init auto)"
 
