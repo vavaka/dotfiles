@@ -654,11 +654,12 @@ augroup end " }}}
 let g:vroom_use_vimux = 1
 let g:vroom_ignore_color_flag=1
 let g:vroom_spec_command="rspec -f d"
-"let g:vroom_command_prefix=""
 
 nmap <Leader>vf :VroomRunTestFile<CR>
 nmap <Leader>vn :VroomRunNearestTest<CR>
 nmap <Leader>vl :VroomRunLastTest<CR>
+
+let test#ruby#bundle_exec = 1
 
 augroup ruby_files "{{{
   au!
