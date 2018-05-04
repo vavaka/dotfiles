@@ -216,7 +216,8 @@ else
 endif
 
 " switch to russian with ctrl-^
-" as a side effect it sets new keymap as current for insert and search modes
+" by changing value of this option there is a side effect, 
+" it sets new keymap as current for insert and search modes
 " so we need to reset input methods for these modes
 set keymap=russian-jcukenwin 
 set iminsert=0
