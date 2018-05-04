@@ -45,7 +45,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vagrant)
+plugins=(git vagrant flux)
 
 # User configuration
 
@@ -216,10 +216,3 @@ x-bash-backward-delete-word () {
 zle -N x-bash-backward-delete-word
 bindkey '^w'  x-bash-backward-delete-word
 
-alias nz='PS_MARKET=nz'
-alias au='PS_MARKET=au'
-alias uk='PS_MARKET=uk'
-
-alias be='bundle exec'
-
-alias nuke='RAILS_ENV=test rake db:drop db:create db:schema:load db:migrate'
