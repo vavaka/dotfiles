@@ -16,10 +16,7 @@ Plug 'flazz/vim-colorschemes'             " color schemes mega pack
 Plug 'tpope/vim-unimpaired'               " navigate between files, buffers, errors and etc
 Plug 'qpkorr/vim-bufkill'                 " kill buffer using ':BD' without closing a window
 Plug 'MattesGroeger/vim-bookmarks'        " plugin for toggling annotated persisted bookmarks
-Plug 'junegunn/goyo.vim'                  " distraction-free writing, ':Goyo'
-Plug 'junegunn/limelight.vim'             " hyperfocus-writing, ':Limelight'
-Plug 'sirver/ultisnips'                   " snippets engine
-Plug 'honza/vim-snippets'                 " snippets repository
+Plug 'mbbill/undotree'                    " undo tree visualizer
 Plug 'blueyed/vim-diminactive'            " plugin to dim inactive windows
 
 " Search
@@ -40,27 +37,16 @@ Plug 'godlygeek/tabular'                  " script for text filtering and alignm
 Plug 'Lokaltog/vim-easymotion'            " Vim motions on speed
 Plug 'chrisbra/NrrwRgn'                   " edit visual block in separate split window
 Plug 'tpope/vim-surround'                 " surround visual block with quotes, braces, brackets
-Plug 'mbbill/undotree'                    " undo tree visualizer
 Plug 'terryma/vim-multiple-cursors'       " edit similar entries at once <c-n> <c-p> <c-x>
-
-" Completion
-Plug 'Shougo/deoplete.nvim'               " Dark powered asynchronous completion framework
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'           " requires `pip3 install neovim`
+Plug 'sirver/ultisnips'                   " snippets engine
+Plug 'honza/vim-snippets'                 " snippets repository
+Plug 'kana/vim-textobj-user'              " create your own text objects
+Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines
 
 " Tmux
 Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
 Plug 'tmux-plugins/vim-tmux-focus-events' " make terminal vim and tmux work better together
 Plug 'benmills/vimux'                     " vim plugin to interact with tmux
-
-" Programming
-Plug 'w0rp/ale'                           " asynchronous Lint Engine
-Plug 'vavaka/tagbar'                      " displays tags in a window, ordered by scope
-"Plug 'majutsushi/tagbar'
-Plug 'chrisbra/vim-diff-enhanced'         " make use of the Patience diff algorithm
-Plug 'jiangmiao/auto-pairs'               " insert or delete brackets, parens, quotes in pair
-Plug 'tpope/vim-endwise'                  " endwise.vim: wisely add 'end' in ruby, 'endfunction/endif/more' in vim script, etc
-Plug 'ddollar/nerdcommenter'              " commenting engine
 
 " Git
 Plug 'vavaka/vim-fugitive'                " Git integration, use my fork as it supports opening diffs in new tab
@@ -68,13 +54,19 @@ Plug 'airblade/vim-gitgutter'             " shows diff in the gutter (sign colum
 Plug 'junegunn/gv.vim'                    " commit browser
 Plug 'jreybert/vimagit'                   " stage file, hunks or even just parts of a hunk
 
+" Programming
+Plug 'w0rp/ale'                           " asynchronous Lint Engine
+Plug 'majutsushi/tagbar'                  " displays tags in a window, ordered by scope
+Plug 'chrisbra/vim-diff-enhanced'         " make use of the Patience diff algorithm
+Plug 'jiangmiao/auto-pairs'               " insert or delete brackets, parens, quotes in pair
+Plug 'tpope/vim-endwise'                  " endwise.vim: wisely add 'end' in ruby, 'endfunction/endif/more' in vim script, etc
+Plug 'ddollar/nerdcommenter'              " commenting engine
+Plug 'janko-m/vim-test'                   " wrapper for running tests on different granularities
+
 " Ruby and Rails
 Plug 'tpope/vim-rails'
 Plug 'vavaka/vim-cucumber'
-Plug 'vavaka/vim-test'                    " wrapper for running tests on different granularities, use fork from 'vavaka' for environment variables support
 Plug 'skalnik/vim-vroom'                  " vim plugin for running your Ruby tests
-Plug 'kana/vim-textobj-user'              " create your own text objects
-Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines
 Plug 'tek/vim-textobj-ruby'               " text objects for Ruby block, function, class
 
 " Javascript
@@ -404,11 +396,6 @@ nnoremap <silent> <leader>tc :tabclose<CR>
 set sessionoptions-=options
 
 " ---------------------------------------------------------------------------------------------
-" Completion settings
-" ---------------------------------------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
-
-" ---------------------------------------------------------------------------------------------
 " Tmux settings
 " ---------------------------------------------------------------------------------------------
 function! VimuxSlime()
@@ -628,7 +615,7 @@ let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=.
 command! RebuildTags :execute("!".g:ctags_command)
 
 command! -nargs=0 TagbarToggleFocusAutoClose call tagbar#ToggleWindow('fcj')
-nmap <silent> <leader>f] :TagbarToggleFocusAutoClose<CR>
+nmap <silent> <leader>f] :TagbarToggle<CR>
 
 " ---------------------------------------------------------------------------------------------
 " Vimscript settings
