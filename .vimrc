@@ -663,6 +663,11 @@ nmap <Leader>vn :VroomRunNearestTest<CR>
 nmap <Leader>vl :VroomRunLastTest<CR>
 
 let test#ruby#bundle_exec = 1
+let test#ruby#rspec#options = {
+  \ 'nearest': '--format documentation --backtrace',
+  \ 'file':    '--format documentation',
+  \ 'suite':   '--tag ~slow',
+\}
 
 augroup ruby_files "{{{
   au!
@@ -679,12 +684,6 @@ augroup ruby_files "{{{
   "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
   "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
   "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-
-  let test#ruby#rspec#options = {
-    \ 'nearest': '--format documentation --backtrace',
-    \ 'file':    '--format documentation',
-    \ 'suite':   '--tag ~slow',
-  \}
 
   call ale#linter#Define('eruby', {
     \ 'name': 'erubylint',
