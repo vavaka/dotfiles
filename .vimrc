@@ -591,8 +591,6 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
 map s <Plug>(easymotion-overwin-f)
-map S <Plug>(easymotion-overwin-f2)
-map t <Plug>(easymotion-sl)
 
 " ---------------------------------------------------------------------------------------------
 " Snippets settings
