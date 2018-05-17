@@ -505,9 +505,14 @@ function! s:fzf_chain(dict, lines)
   call fzf#run(fzf#wrap(new_dict))
 endfunction
 
+" search for files
+command! -nargs=* -complete=dir Files call fzf#run(fzf#wrap({
+  \ 'source': 'fd --type f --hidden --follow --no-ignore-vcs --exclude ".git"',
+ \}))
+
 " search for directories
 command! -nargs=* -complete=dir Dirs call fzf#run(fzf#wrap({
- \ 'source': 'find '.(empty(<q-args>) ? '.' : <q-args>).' -type d -not -path "./.*"',
+  \ 'source': 'fd --type d --hidden --follow --no-ignore-vcs --exclude ".git"',
  \}))
 
 " search for file from command mode
