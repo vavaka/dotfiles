@@ -684,12 +684,4 @@ augroup ruby_files "{{{
   "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
   "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
   "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-
-  call ale#linter#Define('eruby', {
-    \ 'name': 'erubylint',
-    \ 'executable': 'erb',
-    \ 'output_stream': 'stderr',
-    \ 'command': "ruby -rerb -e \"puts ERB.new(File.read(%t, encoding: 'BINARY').gsub('<%=','<%'), nil, '-').src\" | ruby -c",
-    \ 'callback': 'ale#handlers#ruby#HandleSyntaxErrors',
-  \})
 augroup end " }}}
