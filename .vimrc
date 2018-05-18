@@ -678,10 +678,4 @@ augroup ruby_files "{{{
   autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
   autocmd filetype ruby let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
-
-  "enable ruby omni completion
-  "http://stackoverflow.com/questions/15723209/better-autocomplete-in-vim
-  "autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-  "autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-  "autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 augroup end " }}}
