@@ -119,7 +119,7 @@ export HISTFILE=~/.zsh_history
 export HH_CONFIG=hicolor,blacklist,rawhistory
 
 # rbenv
-export PATH="/Users/vavaka/.rbenv/shims:${PATH}"
+export PATH="$HOME/.rbenv/shims:${PATH}"
 export RBENV_SHELL=zsh
 source '/usr/local/Cellar/rbenv/1.1.0/libexec/../completions/rbenv.zsh'
 command rbenv rehash 2>/dev/null
