@@ -511,6 +511,11 @@ endfunction
 
 " search for files
 command! -nargs=* -complete=dir Files call fzf#run(fzf#wrap({
+  \ 'source': 'fd --type f --follow --no-ignore-vcs --exclude ".git"',
+ \}))
+
+" search for files
+command! -nargs=* -complete=dir HiddenFiles call fzf#run(fzf#wrap({
   \ 'source': 'fd --type f --hidden --follow --no-ignore-vcs --exclude ".git"',
  \}))
 
@@ -549,6 +554,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 nmap <silent> <leader>nf :Files<CR>
+nmap <silent> <leader>nF :HiddenFiles<CR>
 nmap <silent> <leader>nd :Dirs<CR>
 nmap <silent> <leader>ng :GFiles<CR>
 nmap <silent> <leader>nG :GFiles?<CR>
