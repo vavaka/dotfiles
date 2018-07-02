@@ -429,6 +429,8 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 let g:gitgutter_diff_base = 'HEAD' 
 
 nmap <silent> <leader>gs :Gstatus<CR>
+command! Gtstatus :execute("tabedit % | Gstatus | only")
+nmap <silent> <leader>gS :Gtstatus<CR>
 nmap <silent> <leader>gb :Gblame<CR>
 nmap <silent> <leader>gl :GV --max-count 2000<CR>
 
