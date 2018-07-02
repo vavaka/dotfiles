@@ -432,7 +432,8 @@ nmap <silent> <leader>gs :Gstatus<CR>
 command! Gtstatus :execute("tabedit % | Gstatus | only")
 nmap <silent> <leader>gS :Gtstatus<CR>
 nmap <silent> <leader>gb :Gblame<CR>
-nmap <silent> <leader>gl :GV --max-count 2000<CR>
+nmap <silent> <leader>gL :GV --max-count 2000<CR>
+nmap <silent> <leader>gl :GV!<CR>
 
 " show diff in a separate tab
 command! Gtdiff :execute("tabedit % | Gdiff")
