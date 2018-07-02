@@ -41,7 +41,7 @@ Plug 'terryma/vim-multiple-cursors'       " edit similar entries at once <c-n> <
 Plug 'sirver/ultisnips'                   " snippets engine
 Plug 'honza/vim-snippets'                 " snippets repository
 Plug 'kana/vim-textobj-user'              " create your own text objects
-Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines
+Plug 'kana/vim-textobj-indent'            " text objects for indented blocks of lines (i)
 
 " Tmux
 Plug 'vavaka/vim-tmux-navigator'          " navigate between vim splits and tmux panes using same key bindings
@@ -67,7 +67,7 @@ Plug 'janko-m/vim-test'                   " wrapper for running tests on differe
 Plug 'tpope/vim-rails'
 Plug 'vavaka/vim-cucumber'
 Plug 'skalnik/vim-vroom'                  " vim plugin for running your Ruby tests
-Plug 'tek/vim-textobj-ruby'               " text objects for Ruby block, function, class
+Plug 'tek/vim-textobj-ruby'               " text objects for Ruby block (r), function (f), class (c)
 
 " Javascript
 Plug 'pangloss/vim-javascript'
