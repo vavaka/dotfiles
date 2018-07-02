@@ -347,6 +347,14 @@ let g:ack_use_cword_for_empty_search = 1
 nnoremap <C-s> :Ack!<space>
 vmap <C-s> y:Ack!<space>"<C-R>""<left>
 
+" search for file from command mode
+function! s:append_expansion(expansion)
+  call feedkeys('"'.expand(a:expansion).'"', 'n')
+  return ''
+endfunction
+cnoremap <expr> <c-x><c-w> <sid>append_expansion('<cword>')
+cnoremap <expr> <c-x><c-e> <sid>append_expansion('<cWORD>')
+
 " ---------------------------------------------------------------------------------------------
 " Buffers settings
 " ---------------------------------------------------------------------------------------------
