@@ -265,7 +265,7 @@ vnoremap / /\v
 
 " mappings for search and replace of selected text
 vmap / y/<C-R>"<CR>
-vmap s y:%s/<C-R>"//gc<LEFT><LEFT><LEFT>
+vmap <C-r> y:%s/<C-R>"//gc<LEFT><LEFT><LEFT>
 
 " keep cursor on the current word
 nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
