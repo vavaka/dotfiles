@@ -343,7 +343,9 @@ endif
 let g:ackhighlight = 1
 let g:ack_use_cword_for_empty_search = 1
 
-nnoremap S :Ack!<Space>
+" to map <C-s> key in Vim it should be disable in terminal first by 'stty -ion' command
+nnoremap <C-s> :Ack!<space>
+vmap <C-s> y:Ack!<space>"<C-R>""<left>
 
 " ---------------------------------------------------------------------------------------------
 " Buffers settings

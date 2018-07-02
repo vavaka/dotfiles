@@ -90,6 +90,8 @@ export PATH="$PATH:$HOME/bin"
 # do not remember commands which starts with space character
 export HISTCONTROL=ignoreboth
 
+stty -ixon
+
 # fasd configuration
 eval "$(fasd --init auto)"
 
