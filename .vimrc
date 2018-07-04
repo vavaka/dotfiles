@@ -507,8 +507,6 @@ nmap <silent> <leader>rv :TestVisit<CR>
 " ---------------------------------------------------------------------------------------------
 " File managers settings
 " ---------------------------------------------------------------------------------------------
-let g:netrw_keepdir= 0 " auto set netrw current directory to browsing directory
-
 " NERDTree
 let g:NERDTreeHijackNetrw=0
 nmap <silent> <leader><leader>t :NERDTreeToggle<CR>
