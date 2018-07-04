@@ -364,8 +364,27 @@ set hidden
 " mappings for sudo to write
 cmap w!! w !sudo tee % >/dev/null 
 
-" change working dir to base dir of current buffer
-command! CDC cd %:p:h
+" change working directory to the git root directory
+function! CdGitRoot()
+  let git_root = system("git rev-parse --show-toplevel")
+  if matchstr(git_root, '^fatal:.*') == ""
+    lcd `=git_root`
+    echo "Working directory is ".git_root
+  else
+    echo "Git root not found"
+  endif
+endfunction
+nnoremap <leader>gw :call CdGitRoot()<CR>
+
+" change working directory to the git root directory
+function! CdFileRoot()
+  let file_root = expand("%:p:h")
+  lcd `=file_root`
+  echo "Working directory is ".file_root
+endfunction
+
+" change working directory to current file directory
+nnoremap <leader>fw :call CdFileRoot()<CR>
 
 " ---------------------------------------------------------------------------------------------
 " Windows settings
