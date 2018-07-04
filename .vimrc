@@ -521,12 +521,12 @@ endfunction
 
 " search for files
 command! -nargs=? -complete=dir Files call fzf#run(fzf#wrap({
-  \ 'source': 'fd --type f --follow --no-ignore-vcs --exclude ".git" ".*" '.expand(<q-args>),
+  \ 'source': 'ag --all-types -g ".*" '.expand(<q-args>),
  \}))
 
 " search for files
 command! -nargs=? -complete=dir HiddenFiles call fzf#run(fzf#wrap({
-  \ 'source': 'fd --type f --hidden --follow --no-ignore-vcs --exclude ".git" ".*" '.expand(<q-args>),
+  \ 'source': 'ag --all-types --hidden -g ".*" '.expand(<q-args>),
  \}))
 
 " search for directories
