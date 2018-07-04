@@ -142,7 +142,10 @@ endif
 " Terminal settings
 " ---------------------------------------------------------------------------------------------
 if !has("gui_running")
-  set t_Co=256        " use 256 colors in terminal
+  " enable true color support
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
 
   set ttimeout        " time out for key codes
   set ttimeoutlen=100 " wait up to 100ms after Esc for special key
