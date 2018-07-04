@@ -520,18 +520,18 @@ function! s:fzf_chain(dict, lines)
 endfunction
 
 " search for files
-command! -nargs=* -complete=dir Files call fzf#run(fzf#wrap({
-  \ 'source': 'fd --type f --follow --no-ignore-vcs --exclude ".git"',
+command! -nargs=? -complete=dir Files call fzf#run(fzf#wrap({
+  \ 'source': 'fd --type f --follow --no-ignore-vcs --exclude ".git" ".*" '.expand(<q-args>),
  \}))
 
 " search for files
-command! -nargs=* -complete=dir HiddenFiles call fzf#run(fzf#wrap({
-  \ 'source': 'fd --type f --hidden --follow --no-ignore-vcs --exclude ".git"',
+command! -nargs=? -complete=dir HiddenFiles call fzf#run(fzf#wrap({
+  \ 'source': 'fd --type f --hidden --follow --no-ignore-vcs --exclude ".git" ".*" '.expand(<q-args>),
  \}))
 
 " search for directories
-command! -nargs=* -complete=dir Dirs call fzf#run(fzf#wrap({
-  \ 'source': 'fd --type d --hidden --follow --no-ignore-vcs --exclude ".git"',
+command! -nargs=? -complete=dir Dirs call fzf#run(fzf#wrap({
+  \ 'source': 'fd --type d --hidden --follow --no-ignore-vcs --exclude ".git" ".*" '.expand(<q-args>),
  \}))
 
 " search for file from command mode
