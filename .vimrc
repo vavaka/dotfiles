@@ -701,6 +701,7 @@ let g:vroom_spec_command="rspec -f d"
 nmap <Leader>vf :VroomRunTestFile<CR>
 nmap <Leader>vn :VroomRunNearestTest<CR>
 nmap <Leader>vl :VroomRunLastTest<CR>
+nmap <Leader>vr :call VimuxRunCommand("ruby " . bufname("%"))<CR>
 
 let test#ruby#bundle_exec = 1
 let test#ruby#rspec#options = {
