@@ -702,29 +702,32 @@ augroup end " }}}
 " ---------------------------------------------------------------------------------------------
 " Ruby/Rails settings
 " ---------------------------------------------------------------------------------------------
-let g:vroom_use_vimux = 1
-let g:vroom_ignore_color_flag=1
-let g:vroom_spec_command="rspec -f d"
+function SetRubyOptions()
+  let g:vroom_use_vimux = 1
+  let g:vroom_ignore_color_flag=1
+  let g:vroom_spec_command="rspec -f d"
 
-nmap <Leader>vf :VroomRunTestFile<CR>
-nmap <Leader>vn :VroomRunNearestTest<CR>
-nmap <Leader>vl :VroomRunLastTest<CR>
-nmap <Leader>vr :call VimuxRunCommand("ruby " . bufname("%"))<CR>
+  nmap <Leader>vf :VroomRunTestFile<CR>
+  nmap <Leader>vn :VroomRunNearestTest<CR>
+  nmap <Leader>vl :VroomRunLastTest<CR>
+  nmap <Leader>vr :call VimuxRunCommand("ruby " . bufname("%"))<CR>
 
-let test#ruby#bundle_exec = 1
-let test#ruby#rspec#options = {
-  \ 'nearest': '--format documentation --backtrace',
-  \ 'file':    '--format documentation',
-  \ 'suite':   '--tag ~slow',
-\}
+  let test#ruby#bundle_exec = 1
+  let test#ruby#rspec#options = {
+    \ 'nearest': '--format documentation --backtrace',
+    \ 'file':    '--format documentation',
+    \ 'suite':   '--tag ~slow',
+  \}
+
+  setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+  let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
+  let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
+endfunction
 
 augroup ruby_files "{{{
   au!
 
-  autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  autocmd Filetype ruby let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '|':'|'}
-
+  autocmd filetype ruby call SetRubyOptions()
   autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-
-  autocmd filetype ruby let g:ctags_command="ctags --tag-relative -R -f./tags --exclude=.git --exclude=tmp --exclude=log --exclude=public --exclude=app/assets --languages=ruby `bundle show --paths` ."
 augroup end " }}}
+
