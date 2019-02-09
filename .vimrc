@@ -439,13 +439,13 @@ let g:VimuxUseNearest=0
 
 function! VimuxSlime()
 	try
-    let prev_val = @v
-    normal! "vy
+    let prev_val=@v
+    normal! gv"vy
 
-		call VimuxSendText(@v)
+		call VimuxSendText(trim(@v))
 		call VimuxSendKeys("Enter")
   finally
-    let @v = prev_val
+    let @v=prev_val
   endtry
 endfunction
 
