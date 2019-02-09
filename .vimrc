@@ -451,8 +451,10 @@ endfunction
 
 " copy selected text to V regsiter and send later to tmux
 map <Leader>vo :call VimuxOpenRunner()<CR>
-vmap <Leader>vs :call VimuxSlime()<CR>
+map <Leader>vq :call VimuxCloseRunner()<CR>
+map <Leader>vz :call VimuxZoomRunner()<CR>
 map <Leader>vr :call VimuxPromptCommand()<CR>
+vmap <Leader>vs :call VimuxSlime()<CR>
 
 " ---------------------------------------------------------------------------------------------
 " Version control settings
