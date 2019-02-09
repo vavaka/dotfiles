@@ -731,3 +731,12 @@ augroup ruby_files "{{{
   autocmd filetype eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 augroup end " }}}
 
+function SetJsOptions()
+  map <silent> <leader>vr :call VimuxRunCommand("node " . bufname("%"))<CR>
+endfunction
+
+augroup js_files "{{{
+  au!
+
+  autocmd filetype javascript call SetJsOptions()
+augroup end " }}}
