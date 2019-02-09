@@ -434,6 +434,9 @@ set sessionoptions-=options
 " ---------------------------------------------------------------------------------------------
 " Tmux settings
 " ---------------------------------------------------------------------------------------------
+" always create new split
+let g:VimuxUseNearest=0
+
 function! VimuxSlime()
 	try
     let prev_val = @v
