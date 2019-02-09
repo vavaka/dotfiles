@@ -121,6 +121,9 @@ map Y y$
 
 nmap <silent> <leader><leader>p :set invpaste<CR>
 
+" left handed keybinding for saving files
+map <silent> <F2> :update<CR>
+
 " ---------------------------------------------------------------------------------------------
 " GUI settings
 " ---------------------------------------------------------------------------------------------
