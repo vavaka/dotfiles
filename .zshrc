@@ -90,6 +90,9 @@ export PATH="$PATH:$HOME/bin"
 # do not remember commands which starts with space character
 export HISTCONTROL=ignoreboth
 
+# disable Software Flow control with Ctrl-s and Ctrl-q keys,
+# this enables to use these keys in terminal for other purposes,
+# i.e using Ctrl-s for searching in terminal text editor
 stty -ixon
 
 # fasd configuration
